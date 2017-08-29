@@ -18,6 +18,7 @@ RES_DIR="resources/"
 
 # Check if the user uses a Mac.
 if [ $OS_NAME == "Darwin" ] ; then
+    echo " > Updating packages / installing python..."
     brew update
     brew install python3
 fi
