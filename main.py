@@ -3,13 +3,15 @@
 Module Docstring
 """
 
-__author__ = "Your Name"
+__author__ = "Jose Ramon Aleman"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
+import gym
 import argparse
 from logzero import logger
 
+#env = gym.make('Marvin-v0')
 
 def main(args):
     """ Main entry point of the app """
