@@ -2,7 +2,7 @@
 
 > Podemos crear un Mini-framkework en Python
 > y si quieres, despues lo podemos documentar todo y hacer una especie de libro.
-> o es "muy marica guey" lol xD
+> Esto es muy marica.
 
 ////////////////////////////////////////////////////////////////////////////////
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
