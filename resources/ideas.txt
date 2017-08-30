@@ -1,0 +1,99 @@
+########################## Mini-framkework en Python ###########################
+
+> Podemos crear un Mini-framkework en Python
+> y si quieres, despues lo podemos documentar todo y hacer una especie de libro.
+> o es "muy marica guey" lol xD
+
+////////////////////////////////////////////////////////////////////////////////
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+Proposito:
+
+Yo creo que con este seremos mejores programadores, no se que opinas.
+Y tambien podemos escribir un mini libro a nuestros nombres.
+Hay que sacar logica para hacer como un template, para setear las funciones
+Estos son los pasos para crear un framework para un projecto de red neuronal
+
+Separar cada seccion (representada por el signo '-') por un update, cada funcion
+y helper es un gitpush.
+Cada mejora es un gitpush.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+================================================================================
+
+$ Dividir codigo en archivos (para que no todo sea en un solo archivo)
+
+================================================================================
+--------------------------------------------------------------------------------
+
+Paso 0 -> Dividir codigo en secciones
+
+* Ver como funciona el codigo
+    [!] comentar el codigo de las functiones, clase, etc...
+
+--------------------------------------------------------------------------------
+================================================================================
+
+$ Pasos para anejar codigo por flags
+
+================================================================================
+--------------------------------------------------------------------------------
+
+Paso 1 -> Separar argumentos por secciones
+
+* Hacer argumentos
+    [!] Separar el archivo por comments
+
+--------------------------------------------------------------------------------
+================================================================================
+
+$ Pasos para guardar informacion:
+
+================================================================================
+--------------------------------------------------------------------------------
+
+Paso 2 -> Almacenar datos en formato .json (es universal y javascript)
+
+* Guardar los outputs de las funciones en el archivos
+* Poner los datos con llaves para que se puedan comparar.
+    [!] i.e.: comparar el fitness level en el archivo (log).
+
+--------------------------------------------------------------------------------
+
+Paso 3 -> Guardar Archivos por fechas
+
+* Separar codigo por archivos, con formato de fecha
+    + Ordenar el nombre para ser comparado por fecha.
+        [!] i.e.: log-ep3-2017-08-23_-22:00:03_-33:55:49.json
+
+--------------------------------------------------------------------------------
+
+Paso 4 -> Almacenar datos en formato .json (es universal y javascript)
+
+* El nombre del log se hace en base de fecha, con milli-segundos si es posible!
+* Luego se hace un script para sacar el mayor fitness de ese archivo.
+    [!] i.e.: tenemos los episodios con mas maldad y rapidos.
+
+--------------------------------------------------------------------------------
+================================================================================
+
+$ Hacer archivos de configuraciones
+
+================================================================================
+--------------------------------------------------------------------------------
+
+Paso 5 -> Guardar archivos en formado accedente
+
+* El formato es como .codigoumberonombre --->    '.''codigo''numbero''nombre'
+    [!] i.e.: .ep1episode, .ep2episode, .ep3episode, .ep4episode
+* Se guarda en un directorio dado (por default, en el root del proyecto)
+    [!] i.e.: /marvin/.
+
+--------------------------------------------------------------------------------
+................................................................................
+
+Leyenda
+
+[!] : informacion
+*   : descripcion de functions (en files)
++   : descripcion de helper functions
