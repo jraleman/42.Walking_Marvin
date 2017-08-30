@@ -15,6 +15,7 @@
 # Directories variables.
 GYM_DIR="gym/"
 RES_DIR="resources/"
+LOG_DIR="logzero/"
 
 # Check if the user uses a Mac.
 if [ $OS_NAME == "Darwin" ] ; then
@@ -57,6 +58,27 @@ cp -Rf $RES_DIR/envs $GYM_DIR/gym/envs
 # Remove extracted files.
 echo " > Cleaning files..."
 rm -Rf $RES_DIR/envs
+
+# Check if there's a previous installation already.
+if [ -d $LOG_DIR ] ; then
+    echo " > It seems that logzero is already installed."
+    while true; do
+        read -p "Do you wish to overwrite the installation? [y / n]" yn
+        case $yn in
+            [Yy]* ) echo " > Cleaning previous installation..."; \
+                    rm -Rf $LOG_DIR; break;;
+            [Nn]* ) echo " > Nothing has been modified. Bye :)"; exit;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+fi
+
+# Install logzero package.
+echo " > Installing the logzero package..."
+git clone https://github.com/metachris/logzero.git
+cd logzero/
+pip install --user -e .
+cd ../
 
 # Shows a success message :D
 echo " > Done! Everything is pepa."
