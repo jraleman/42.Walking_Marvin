@@ -13,9 +13,10 @@
 # **************************************************************************** #
 
 # Directories variables.
-GYM_DIR="gym/"
-RES_DIR="resources/"
-LOG_DIR="logzero/"
+BIN_DIR="marvin"
+GYM_DIR="gym"
+RES_DIR="resources"
+LOG_DIR="logzero"
 
 # Check if the user uses a Mac.
 if [ $OS_NAME == "Darwin" ] ; then
@@ -25,13 +26,13 @@ if [ $OS_NAME == "Darwin" ] ; then
 fi
 
 # Check if there's a previous installation already.
-if [ -d $GYM_DIR ] ; then
+if [ -d $BIN_DIR/$GYM_DIR/ ] ; then
     echo " > It seems that OpenAI Gym is already installed."
     while true; do
-        read -p "Do you wish to overwrite the installation? [y / n]" yn
+        read -p "Do you wish to overwrite the installation? [y / n] " yn
         case $yn in
             [Yy]* ) echo " > Cleaning previous installation..."; \
-                    rm -Rf $GYM_DIR; break;;
+                    rm -Rf $BIN_DIR/$GYM_DIR/; break;;
             [Nn]* ) echo " > Nothing has been modified. Bye :)"; exit;;
             * ) echo "Please answer yes or no.";;
         esac
@@ -40,33 +41,33 @@ fi
 
 # Git clone the OpenAI Gym repository.
 echo " > Git cloning the lastest OpenAI Gym commit from the repository..."
-git clone https://github.com/openai/gym.git $GYM_DIR
-cd $GYM_DIR/
+git clone https://github.com/openai/gym.git $BIN_DIR/$GYM_DIR/
+cd $BIN_DIR/$GYM_DIR/
 
 # Install the OpenAI Gym package.
 echo " > Installing the OpenAI Gym package..."
 pip install --user -e .
-cd ../
+cd ../../
 
 # Extracts all the files needed for the walking marvin enviroment.
 echo " > Extracting and installing the walking marvin enviroment..."
 cd $RES_DIR/
 unzip envs.zip
 cd ../
-cp -Rf $RES_DIR/envs $GYM_DIR/gym/envs
+cp -Rf $RES_DIR/envs $BIN_DIR/$GYM_DIR/gym/envs/
 
 # Remove extracted files.
 echo " > Cleaning files..."
-rm -Rf $RES_DIR/envs
+rm -Rf $RES_DIR/envs/
 
 # Check if there's a previous installation already.
-if [ -d $LOG_DIR ] ; then
+if [ -d $BIN_DIR/$LOG_DIR ] ; then
     echo " > It seems that logzero is already installed."
     while true; do
-        read -p "Do you wish to overwrite the installation? [y / n]" yn
+        read -p "Do you wish to overwrite the installation? [y / n] " yn
         case $yn in
             [Yy]* ) echo " > Cleaning previous installation..."; \
-                    rm -Rf $LOG_DIR; break;;
+                    rm -Rf $BIN_DIR/$LOG_DIR/; break;;
             [Nn]* ) echo " > Nothing has been modified. Bye :)"; exit;;
             * ) echo "Please answer yes or no.";;
         esac
@@ -75,10 +76,11 @@ fi
 
 # Install logzero package.
 echo " > Installing the logzero package..."
-git clone https://github.com/metachris/logzero.git
-cd logzero/
+git clone https://github.com/metachris/logzero.git $BIN_DIR/$LOG_DIR/
+cd $BIN_DIR/$LOG_DIR/
+pip install --user setuptools
 pip install --user -e .
-cd ../
+cd ../../
 
 # Shows a success message :D
 echo " > Done! Everything is pepa."
