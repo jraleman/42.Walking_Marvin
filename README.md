@@ -32,7 +32,7 @@ The program display log for each episode.
 **Advanced options:**
 
 | Flags         | Description                                                                                   |
-| :------------ |:---------------------------------------------------------------------------------------------:|
+| :------------ |:--------------------------------------------------------------------------------------------- |
 | `–-walk (-v)` | Display only walking process.                                                                 |
 | `–-help (-h)` | Display available commands.                                                                   |
 | `–-load (-l)` | Load weights for Marvin agent from a file. Skip training process if this option is specified. |
@@ -70,4 +70,4 @@ The following sources helped us during the development of this project:
 
 ## License
 
-This project uses the MIT License.
+This project is under the MIT License.
