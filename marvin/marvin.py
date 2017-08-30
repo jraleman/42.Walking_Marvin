@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    marvin.py                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/08/29 23:48:00 by jaleman           #+#    #+#              #
+#    Updated: 2017/08/29 23:48:01 by jaleman          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 """
 Module Docstring
 """
@@ -7,16 +21,16 @@ __author__ = "Jose Ramon Aleman"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
-import gym
+#import gym
 import argparse
-from logzero import logger
+#from logzero import logger
 
 #env = gym.make('Marvin-v0')
 
 def main(args):
     """ Main entry point of the app """
-    logger.info("hello world")
-    logger.info(args)
+    #logger.info("hello world")
+    #logger.info(args)
 
 
 if __name__ == "__main__":
