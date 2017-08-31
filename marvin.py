@@ -22,42 +22,14 @@ __version__ = "0.1.0"
 __license__ = "MIT"
 
 # Python modules
-import os
-import logging
-import logging.handlers
+import gym
+
+# OpenAI Gym enviroment config
+#env = gym.make('Marvin-v0')
 
 # Marvin modules
 from marvin import flags
-
-
-#import gym
-#env = gym.make('Marvin-v0')
-
-################################################################################
-################################################################################
-# Log
-################################################################################
-
-
-# handler = logging.handlers.WatchedFileHandler(
-# os.environ.get("LOGFILE", "lol.log"))
-# formatter = logging.Formatter(logging.BASIC_FORMAT)
-# handler.setFormatter(formatter)
-# root = logging.getLogger()
-# root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
-# root.addHandler(handler)
-
-
-# try:
-#     exit(main())
-# except Exception:
-#     logging.exception("Exception in main()")
-#     exit(1)
-
-################################################################################
-################################################################################
-# Main
-################################################################################
+#from marvin import logs
 
 def main():
     """ Main entry point of the project """
@@ -68,7 +40,7 @@ def main():
 if __name__ == "__main__":
     """ This is executed when run from the command line """
 
-    parser = flags.parse()
-    flags.MarvinFlags(parser, __version__).run()
+    flg = flags.MarvinArguments(flags.parser(), __version__)
+    flg.runFlags()
 
     main()
