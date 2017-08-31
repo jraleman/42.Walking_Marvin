@@ -1,53 +1,44 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    marvin.py                                          :+:      :+:    :+:    #
+#    flags.py                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/08/29 23:48:00 by jaleman           #+#    #+#              #
-#    Updated: 2017/08/29 23:48:01 by jaleman          ###   ########.fr        #
+#    Created: 2017/08/31 02:24:22 by jaleman           #+#    #+#              #
+#    Updated: 2017/08/31 02:24:23 by jaleman          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-"""
-Walking Marvin
-"""
-
-__author__ = "Jose Ramon Aleman, Gerardo Solis"
-__version__ = "0.1.0"
-__license__ = "MIT"
-
-#import gym
 import argparse
-#from logzero import logger
-#env = gym.make('Marvin-v0')
 
 ################################################################################
 # Flags
 ################################################################################
 
 class MarvinFlags(object):
-    def __init__(self, flags):
+    def __init__(self, flags, version):
         self.flags = flags
+        self.version = version
+        return None
 
-    def walk(self):
+    def flagWalk(self):
         print ("Walk flag works!")
 
-    def load(self):
+    def flagLoad(self):
         print ("Load flag works!")
         print ("Path is : " + str(self.flags['path']))
 
-    def save(self):
+    def flagSave(self):
         print ("Save flag works!")
         print ("Path is : " + str(self.flags['path']))
 
     def run(self):
         if self.flags['walk']:
-            self.walk()
+            self.flagWalk()
         #elif self.flags['save']:
         #    self.save()
         #elif self.flags['load']:
@@ -55,9 +46,7 @@ class MarvinFlags(object):
         #else:
         #    print ("No arguments given")
 
-################################################################################
-
-def parse_flags():
+def parse():
     parser = argparse.ArgumentParser(
         description='Description of your program',
         epilog="That's all she wrote")
@@ -89,27 +78,7 @@ def parse_flags():
     parser.add_argument(
         '--version',
         action='version',
-        version='%(prog)s ' + str(__version__),
+        version='%(prog)s ' + "0.1.0",
         help="show program's version number and exit")
 
-    return parser
-
-################################################################################
-
-def main(args):
-    """ Main entry point of the project """
-    #logger.info("hello world")
-    #logger.info(args)
-
-if __name__ == "__main__":
-    """ This is executed when run from the command line """
-
-    parser = parse_flags()
-    #print(parser)
-    #print(parser.parse_args())
-    args = vars(parser.parse_args())
-
-    #print(args)
-
-    MarvinFlags(args).run()
-    main(args)
+    return vars(parser.parse_args())
