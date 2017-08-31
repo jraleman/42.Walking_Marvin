@@ -19,9 +19,11 @@ RES_DIR="resources"
 
 # Check if the user uses a Mac.
 if [ $(uname -s) = "Darwin" ] ; then
-    echo " > Updating packages / installing python..."
+    echo " > Updating / installing python packages..."
     brew update
-    brew install python3
+    brew install python3.6
+    brew install numpy
+    brew install box2d
 fi
 
 # Check if there's a previous installation already.
@@ -53,7 +55,7 @@ echo " > Extracting and installing the walking marvin enviroment..."
 cd $RES_DIR/
 unzip envs.zip
 cd ../
-cp -Rf $RES_DIR/envs $BIN_DIR/$GYM_DIR/gym/
+yes | cp -Rf $RES_DIR/envs $BIN_DIR/$GYM_DIR/gym/
 
 # Remove extracted files.
 echo " > Cleaning files..."
