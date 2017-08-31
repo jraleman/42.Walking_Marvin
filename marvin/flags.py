@@ -13,13 +13,10 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Python modules
 import argparse
 
-################################################################################
-# Flags
-################################################################################
-
-class MarvinFlags(object):
+class MarvinArguments(object):
     def __init__(self, flags, version):
         self.flags = flags
         self.version = version
@@ -36,7 +33,7 @@ class MarvinFlags(object):
         print ("Save flag works!")
         print ("Path is : " + str(self.flags['path']))
 
-    def run(self):
+    def runFlags(self):
         if self.flags['walk']:
             self.flagWalk()
         #elif self.flags['save']:
@@ -46,10 +43,12 @@ class MarvinFlags(object):
         #else:
         #    print ("No arguments given")
 
-def parse():
+def parser():
     parser = argparse.ArgumentParser(
-        description='Description of your program',
-        epilog="That's all she wrote")
+        description="Python project that uses OpenAI Gym with the environment \
+            (provided) Marvin. The goal is to train Marvin to walk, \
+            having the training and walking process.",
+        epilog="Go ahead and run the visualizer! :D")
 
     parser.add_argument(
         '-v',
