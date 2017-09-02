@@ -660,6 +660,8 @@ from gym import wrappers
 
 
 ################################################################################
+# Neural Network
+################################################################################
 
 class NeuralNet :
     def __init__(self, nodeCount):
@@ -704,7 +706,8 @@ class NeuralNet :
 
 
 ################################################################################
-
+# Population / Species
+################################################################################
 
 class Population :
     def __init__(self, populationCount, mutationRate, nodeCount):
@@ -763,7 +766,8 @@ class Population :
                 print("Sum Array =",fitnessSum)
                 print("Randoms = ", r1, r2)
                 print("Indices = ", i1, i2)
-        self.population.clear()
+        self.population[:
+        ]
         self.population = nextGen
 
 
@@ -772,7 +776,8 @@ def sigmoid(x):
 
 
 ################################################################################
-
+# Flags
+################################################################################
 
 
 def replayBestBots(bestNeuralNets, steps, sleep):
@@ -795,7 +800,7 @@ def replayBestBots(bestNeuralNets, steps, sleep):
 
 
 def recordBestBots(bestNeuralNets, env):
-    #env = wrappers.Monitor(env, './videos', force='True')
+    env = wrappers.Monitor(env, './videos', force='True')
     print("\n Recording Best Bots ")
     print("---------------------")
     env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
@@ -823,8 +828,8 @@ def recordBestBots(bestNeuralNets, env):
 
 
 ################################################################################
-
-
+# Utils / General Functions
+################################################################################
 
 
 def mapRange(value, leftMin, leftMax, rightMin, rightMax):
@@ -839,6 +844,7 @@ def mapRange(value, leftMin, leftMax, rightMin, rightMax):
 
     return rightMin + (valueScaled * rightSpan)
 
+
 def normalizeArray(aVal, aMin, aMax):
     res = []
     for i in range(len(aVal)):
@@ -852,20 +858,39 @@ def scaleArray(aVal, aMin, aMax):
     return res
 
 
+################################################################################
+# Debug
+################################################################################
+
+def khe_berga(object):
+    print (object)
+    exit()
 
 
 
 
 
 ################################################################################
+# Main / Game.py
+################################################################################
+
 
 # Global variables
 GAME = 'Marvin-v0'
+
+# Movimientos de los pies
 MAX_STEPS = 1000
+
+# Generaciones y especies (veces que se repite)
 MAX_GENERATIONS = 30
 POPULATION_COUNT = 1000
+
+# Random value
 MUTATION_RATE = 0.042
 
+
+# For debug reasons
+import time
 
 if __name__=="__main__":
     # Heurisic: suboptimal, have no notion of balance.
@@ -884,10 +909,17 @@ if __name__=="__main__":
     #env = wrappers.Monitor(env, './videos', force='True')
 
 
-
+    # Enviroment principal, valores random al inicio
     observation = env.reset()
+
+
+    #
     in_dimen = env.observation_space.shape[0]
     out_dimen = env.action_space.shape[0]
+    
+    #khe_berga(in_dimen)
+
+    # 
     obsMin = env.observation_space.low
     obsMax = env.observation_space.high
 
@@ -905,20 +937,50 @@ if __name__=="__main__":
     print("Shape :", out_dimen, " | High :", actionMax, " | Low :", actionMin,"\n")
     #env.render()
 
+
+
+    # Generations -> 
     for gen in range(MAX_GENERATIONS):
         genAvgFit = 0.0
         minFit =  1000000
         maxFit = -1000000
         maxNeuralNet = None
+        #for (int nn = 0; n < pop.population; n += 1)
+        
+
+        # Species -> 
         for nn in pop.population:
             observation = env.reset()
             totalReward = 0
+        
+            # Steps ->
             for step in range(MAX_STEPS):
                 #env.render()
                 action = nn.getOutput(observation)
                 observation, reward, done, info = env.step(action)
+
+
+                # print ("\nObservation : ")
+                # print (observation)
+                # #time.sleep(0.005)
+                # print ("\nReward      : ")
+                # print (reward)
+                # #time.sleep(0.005)
+                # print ("\nDone        : ")
+                # print (done)
+                # #time.sleep(0.005)
+                # print ("\nInfo        : ")
+                # print (info)
+                # #time.sleep(0.005)
+
+                #print("\nObservation\n--------------------------------")
+                #print("Generation : %3d  |  Min : %5.00f  |  Avg : %5.00f  |  Max : %5.00f  " % (gen+1, minFit, genAvgFit, maxFit) )
+
+
                 totalReward += reward
                 if done:
+
+                    #exit()
                     break
 
             nn.fitness = totalReward
@@ -939,4 +1001,4 @@ if __name__=="__main__":
 
     #uploadSimulation()
 
-    replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
+    #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
