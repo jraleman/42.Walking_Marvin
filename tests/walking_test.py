@@ -651,9 +651,13 @@ class Marvin(gym.Env):
 
 
 
+# Check if we need to remove something from here.
 
-
-import time, math, random, bisect, copy
+import time
+import math
+import random
+import bisect
+import copy
 import gym
 import numpy as np
 from gym import wrappers
@@ -672,6 +676,12 @@ class NeuralNet :
         for i in range(len(nodeCount) - 1):
             self.weights.append( np.random.uniform(low=-1, high=1, size=(nodeCount[i], nodeCount[i+1])).tolist() )
             self.biases.append( np.random.uniform(low=-1, high=1, size=(nodeCount[i+1])).tolist())
+
+    def getOutput(self, input):
+        output = input
+        for i in range(len(self.nodeCount)-1):
+            output = np.reshape( np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
+        return output
 
 
     def printWeightsandBiases(self):
@@ -698,11 +708,21 @@ class NeuralNet :
             print("\b],", end="")
         print("\b \n]\n--------------------------------\n")
 
-    def getOutput(self, input):
-        output = input
-        for i in range(len(self.nodeCount)-1):
-            output = np.reshape( np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
-        return output
+################################################################################
+# THIS IS NOT USED ANYWHERE????
+# Sigmoid function
+# Type of activation function for artifical neurons.
+
+def sigmoid(x):
+    return 1.0/(1.0 + np.exp(-x))
+
+# Real-valued and differentiable (you need this to find gradients.
+# Analytic tractability for the differentiaton operation.
+# It's an acceptable mathematical representation of biological neuron behaviour.
+# The output shows if the neuron is firing or not.
+
+################################################################################
+
 
 
 ################################################################################
@@ -714,11 +734,10 @@ class Population :
         self.nodeCount = nodeCount
         self.popCount = populationCount
         self.m_rate = mutationRate
-        self.population = [ NeuralNet(nodeCount) for i in range(populationCount)]
+        self.population = [NeuralNet(nodeCount) for i in range(populationCount)]
 
 
     def createChild(self, nn1, nn2):
-
         child = NeuralNet(self.nodeCount)
         for i in range(len(child.weights)):
             for j in range(len(child.weights[i])):
@@ -728,8 +747,6 @@ class Population :
                             child.weights[i][j][k] = nn1.weights[i][j][k]
                         else :
                             child.weights[i][j][k] = nn2.weights[i][j][k]
-
-
         for i in range(len(child.biases)):
             for j in range(len(child.biases[i])):
                 if random.random() > self.m_rate:
@@ -737,7 +754,6 @@ class Population :
                         child.biases[i][j] = nn1.biases[i][j]
                     else:
                         child.biases[i][j] = nn2.biases[i][j]
-
         return child
 
 
@@ -747,13 +763,10 @@ class Population :
         for i in range(self.popCount):
             if random.random() < float(self.popCount-i)/self.popCount:
                 nextGen.append(copy.deepcopy(self.population[i]));
-
         fitnessSum = [0]
         minFit = min([i.fitness for i in nextGen])
         for i in range(len(nextGen)):
             fitnessSum.append(fitnessSum[i]+(nextGen[i].fitness-minFit)**4)
-
-
         while(len(nextGen) < self.popCount):
             r1 = random.uniform(0, fitnessSum[len(fitnessSum)-1] )
             r2 = random.uniform(0, fitnessSum[len(fitnessSum)-1] )
@@ -766,13 +779,9 @@ class Population :
                 print("Sum Array =",fitnessSum)
                 print("Randoms = ", r1, r2)
                 print("Indices = ", i1, i2)
-        self.population[:
-        ]
+        self.population[:] # clear the list, idk if we need to use it! Maybe not
         self.population = nextGen
 
-
-def sigmoid(x):
-    return 1.0/(1.0 + np.exp(-x))
 
 
 ################################################################################
@@ -820,13 +829,6 @@ def recordBestBots(bestNeuralNets, env):
 
 
 
-#def uploadSimulation():
-#    API_KEY = open('/home/dollarakshay/Documents/API Keys/Open AI Key.txt', 'r').read().rstrip()
-#    gym.upload('Artificial Intelligence/'+GAME, api_key=API_KEY)
-
-
-
-
 ################################################################################
 # Utils / General Functions
 ################################################################################
@@ -862,7 +864,7 @@ def scaleArray(aVal, aMin, aMax):
 # Debug
 ################################################################################
 
-def khe_berga(object):
+def what_is_this(object):
     print (object)
     exit()
 
@@ -916,10 +918,10 @@ if __name__=="__main__":
     #
     in_dimen = env.observation_space.shape[0]
     out_dimen = env.action_space.shape[0]
-    
+
     #khe_berga(in_dimen)
 
-    # 
+    #
     obsMin = env.observation_space.low
     obsMax = env.observation_space.high
 
@@ -939,23 +941,22 @@ if __name__=="__main__":
 
 
 
-    # Generations -> 
+    # Generations ->
     for gen in range(MAX_GENERATIONS):
         genAvgFit = 0.0
         minFit =  1000000
         maxFit = -1000000
         maxNeuralNet = None
-        #for (int nn = 0; n < pop.population; n += 1)
-        
 
-        # Species -> 
+
+        # Species ->
         for nn in pop.population:
             observation = env.reset()
             totalReward = 0
-        
+
             # Steps ->
             for step in range(MAX_STEPS):
-                #env.render()
+                env.render()
                 action = nn.getOutput(observation)
                 observation, reward, done, info = env.step(action)
 
