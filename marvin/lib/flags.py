@@ -27,33 +27,39 @@ class MarvinFlags(object):
         self.version = version
         return None
 
+    def flagWalk(bestNeuralNets, steps, sleep):
+        print ("Load flag works!")
+        # choice = input("Do you want to watch the replay ?[Y/N] : ")
+        # if choice=='Y' or choice=='y':
+        for i in range(len(bestNeuralNets)):
+            #if bestNeuralNets[i] == None:
+                #return
+            if (i + 1) % steps == 0:
+                observation = env.reset()
+                totalReward = 0
+                for step in range(MAX_STEPS):
+                    env.render()
+                    time.sleep(sleep)
+                    action = bestNeuralNets[i].getOutput(observation)
+                    observation, reward, done, info = env.step(action)
+                    totalReward += reward
+                    if done:
+                        observation = env.reset()
+                        break
+                #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+        return None
 
-    def replayBestBots(bestNeuralNets, steps, sleep):
-        choice = input("Do you want to watch the replay ?[Y/N] : ")
-        if choice=='Y' or choice=='y':
-            for i in range(len(bestNeuralNets)):
-                if (i+1)%steps == 0 :
-                    observation = env.reset()
-                    totalReward = 0
-                    for step in range(MAX_STEPS):
-                        env.render()
-                        time.sleep(sleep)
-                        action = bestNeuralNets[i].getOutput(observation)
-                        observation, reward, done, info = env.step(action)
-                        totalReward += reward
-                        if done:
-                            observation = env.reset()
-                            break
-                    print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-
-
-    def recordBestBots(bestNeuralNets, env):
-        env = wrappers.Monitor(env, './videos', force='True')
-        print("\n Recording Best Bots ")
-        print("---------------------")
-        env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
+    def flagVideo(bestNeuralNets, path, env):
+        print ("Video flag works!")
+        print ("Path is : " + str(self.flags['path']))
+        env = wrappers.Monitor(env, path, force='True')
+        #print("\n Recording Best Bots ")
+        #print("---------------------")
+        env = gym.wrappers.Monitor(env, 'vids/'+GAME)
         observation = env.reset()
         for i in range(len(bestNeuralNets)):
+            #if bestNeuralNets[i] == None:
+                #return
             totalReward = 0
             for step in range(MAX_STEPS):
                 env.render()
@@ -63,13 +69,12 @@ class MarvinFlags(object):
                 if done:
                     observation = env.reset()
                     break
-            print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
         env.monitor.close()
+        return None
 
-
-
-    def flagWalk(self):
-        print ("Walk flag works!")
+    #def flagWalk(self):
+    #    print ("Walk flag works!")
 
     def flagLoad(self):
         print ("Load flag works!")
@@ -82,6 +87,8 @@ class MarvinFlags(object):
     def runFlags(self):
         if self.flags['walk']:
             self.flagWalk()
+        elif self.flags['video']:
+            self.flagVideo()
         #elif self.flags['save']:
         #    self.save()
         #elif self.flags['load']:
@@ -97,11 +104,19 @@ def parser():
         epilog="Go ahead and run the visualizer! :D")
 
     parser.add_argument(
-        '-v',
+        '-w',
         '--walk',
         action='store_true',
         help='display only the walking process',
         required=False)
+
+    parser.add_argument(
+        '-v',
+        '--video',
+        action='store',
+        help='saves videos of the walking proccess of the best species \
+        from each generation',
+        required=False)\
 
     parser.add_argument(
         '-l',
