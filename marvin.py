@@ -13,8 +13,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-from __future__ import print_function
-
 """
 Walking Marvin
 """
@@ -42,7 +40,7 @@ def main():
     # log = logging.getLogger("my-logger")
     # log.info("Hello, world")
     env = gym.make(GAME)
-    #env = Marvin()
+    #env = env.Marvin
     #env.reset()
     #env = TraceRecordingWrapper(env)
     #env = wrappers.Monitor(env, './videos', force='True')
