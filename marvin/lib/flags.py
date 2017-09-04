@@ -16,11 +16,57 @@
 # Python modules
 import argparse
 
-class MarvinArguments(object):
+
+#if string is capitalize, lowercase it and then parse it.
+#If not, error (show argparse error or something)
+
+
+class MarvinFlags(object):
     def __init__(self, flags, version):
         self.flags = flags
         self.version = version
         return None
+
+
+    def replayBestBots(bestNeuralNets, steps, sleep):
+        choice = input("Do you want to watch the replay ?[Y/N] : ")
+        if choice=='Y' or choice=='y':
+            for i in range(len(bestNeuralNets)):
+                if (i+1)%steps == 0 :
+                    observation = env.reset()
+                    totalReward = 0
+                    for step in range(MAX_STEPS):
+                        env.render()
+                        time.sleep(sleep)
+                        action = bestNeuralNets[i].getOutput(observation)
+                        observation, reward, done, info = env.step(action)
+                        totalReward += reward
+                        if done:
+                            observation = env.reset()
+                            break
+                    print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+
+
+    def recordBestBots(bestNeuralNets, env):
+        env = wrappers.Monitor(env, './videos', force='True')
+        print("\n Recording Best Bots ")
+        print("---------------------")
+        env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
+        observation = env.reset()
+        for i in range(len(bestNeuralNets)):
+            totalReward = 0
+            for step in range(MAX_STEPS):
+                env.render()
+                action = bestNeuralNets[i].getOutput(observation)
+                observation, reward, done, info = env.step(action)
+                totalReward += reward
+                if done:
+                    observation = env.reset()
+                    break
+            print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+        env.monitor.close()
+
+
 
     def flagWalk(self):
         print ("Walk flag works!")
@@ -81,44 +127,3 @@ def parser():
         help="show program's version number and exit")
 
     return vars(parser.parse_args())
-
-
-
-
-def replayBestBots(bestNeuralNets, steps, sleep):
-    choice = input("Do you want to watch the replay ?[Y/N] : ")
-    if choice=='Y' or choice=='y':
-        for i in range(len(bestNeuralNets)):
-            if (i+1)%steps == 0 :
-                observation = env.reset()
-                totalReward = 0
-                for step in range(MAX_STEPS):
-                    env.render()
-                    time.sleep(sleep)
-                    action = bestNeuralNets[i].getOutput(observation)
-                    observation, reward, done, info = env.step(action)
-                    totalReward += reward
-                    if done:
-                        observation = env.reset()
-                        break
-                print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-
-
-def recordBestBots(bestNeuralNets, env):
-    env = wrappers.Monitor(env, './videos', force='True')
-    print("\n Recording Best Bots ")
-    print("---------------------")
-    env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
-    observation = env.reset()
-    for i in range(len(bestNeuralNets)):
-        totalReward = 0
-        for step in range(MAX_STEPS):
-            env.render()
-            action = bestNeuralNets[i].getOutput(observation)
-            observation, reward, done, info = env.step(action)
-            totalReward += reward
-            if done:
-                observation = env.reset()
-                break
-        print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    env.monitor.close()

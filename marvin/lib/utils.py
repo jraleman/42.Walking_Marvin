@@ -35,5 +35,6 @@ def scaleArray(aVal, aMin, aMax):
 ################################################################################
 
 def what_is_this(object):
+	import time
     print (object)
     exit()
