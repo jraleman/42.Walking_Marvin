@@ -35,8 +35,11 @@ POPULATION_COUNT = 1000
 MUTATION_RATE = 0.042
 
 
-def main():
+# initialize all of these first inside the if main
+def main(env, observation, flg, ):
     """ Main entry point of the project """
+
+	#print type(env)
 
     # log = logging.getLogger("my-logger")
     # # log.info("Hello, world")
@@ -44,6 +47,7 @@ def main():
     # #env = env.Marvin
     # #env.reset()
     # #env = TraceRecordingWrapper(env)
+    # print type(env)
     # #env = wrappers.Monitor(env, './videos', force='True')
 	#
 	#
@@ -79,6 +83,14 @@ def main():
 	#
     # # Generations ->
     # for gen in range(MAX_GENERATIONS):
+
+
+
+		# if flags != NULL:
+			#flg.runFlags()
+
+
+
     #     genAvgFit = 0.0
     #     minFit =  1000000
     #     maxFit = -1000000
@@ -145,8 +157,30 @@ def main():
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
+	# make this into a structure, type openai gym
+	env = gym.make(GAME)
+    observation = env.reset()
+    in_dimen = env.observation_space.shape[0]
+    out_dimen = env.action_space.shape[0]
+    obsMin = env.observation_space.low
+    obsMax = env.observation_space.high
+    actionMin = env.action_space.low
+    actionMax = env.action_space.high
 
-    flg = MarvinFlags(parser(), __version__)
-    flg.runFlags()
+	## make this into a structure too, type nn network or something like that
+	pop = specs.Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
+	bestNeuralNets = []
+	genAvgFit = 0.0
+	minFit =  1000000
+	maxFit = -1000000
+	maxNeuralNet = None
+	totalReward = 0
+	action = nn.getOutput(observation)
 
-    main()
+	# flag variables
+	flg = MarvinFlags(env, parser(), __version__)
+
+	# gym structure
+	# nn type structure
+	# flg
+    main(arg1, arg2, arg3)
