@@ -13,10 +13,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Python modules
 import os
 import logging
 import argparse
+
+from lib.open_ai_gym import OpenAIGym
 
 def parser():
     """
@@ -149,16 +150,7 @@ class MarvinFlags(object):
     ..........
     """
     def __init__(self, version):
-        #self.flags = flags
         self.flags = parser()
-
-        # GAME = 'Marvin-v0'
-        # MAX_STEPS = 1000
-        # MAX_GENERATIONS = 100
-        # POPULATION_COUNT = 42
-        # MUTATION_RATE = 0.042
-
-
         self.version = version
         return None
 
@@ -226,41 +218,25 @@ class MarvinFlags(object):
         # MUTATION_RATE = 0.042
 
 
-def flagName(self, val):
-	self.game_name = val
-	return None
+    def flagName(self, val):
+        self.game_name = val
+        return None
 
-def flagGenerations(self, val):
-	self.max_generations = val
-	return None
+    def flagGenerations(self, val):
+        self.max_generations = val
+        return None
 
-def flagPopulation(self, val):
-	self.population_count = val
-	return None
+    def flagPopulation(self, val):
+        self.population_count = val
+        return None
 
-def flagMovement(self):
-	self.max_steps = val
-	return None
+    def flagMovement(self):
+        self.max_steps = val
+        return None
 
-def flagRate(self, val):
-	self.mutation_rate = val
-	return None
-
-
-
-################################################################################
-
-def getGameName(self):
-	return self.game_name
-
-def getMaxGenerations(self):
-	return self.max_generations
-
-def getPopulationCound(self):
-	return self.population_count
-
-
-
+    def flagRate(self, val):
+        self.mutation_rate = val
+        return None
 
 
 

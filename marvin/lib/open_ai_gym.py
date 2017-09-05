@@ -30,6 +30,15 @@ class OpenAIGym(object):
         self.action_max = env.action_space.high
         # Why 13, 8 and 13??? lol!
         self.node_count = [in_dimen, 13, 8, 13, out_dimen]
+
+
+        # GAME = 'Marvin-v0'
+        # MAX_STEPS = 1000
+        # MAX_GENERATIONS = 100
+        # POPULATION_COUNT = 42
+        # MUTATION_RATE = 0.042
+
+
         return None
 
     # Get methods
@@ -51,6 +60,16 @@ class OpenAIGym(object):
         return self.action_max
     def getNodeCount(self):
         return self.node_count
+    def getGameName(self):
+        return self.game_name
+    def getMaxGenerations(self):
+        return self.max_generations
+    def getPopulationCound(self):
+        return self.population_count
+    def getMaxSteps(self):
+        return self.max_steps
+    def getMutationRate(self, val):
+        return self.mutation_rate
 
     # Set methods
     def setEnv(self, val):
@@ -79,4 +98,19 @@ class OpenAIGym(object):
         return None
     def setNodeCount(self, val):
         self.node_count = val
+        return None
+    def setGameName(self, val):
+        self.game_name = val
+        return None
+    def setMaxGenerations(self, val):
+        self.max_generations = val
+        return None
+    def setPopulationCount(self, val):
+        self.population_count = val
+        return None
+    def setMaxSteps(self):
+        self.max_steps = val
+        return None
+    def setMutationRate(self, val):
+        self.mutation_rate = val
         return None
