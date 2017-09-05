@@ -56,9 +56,9 @@ def main(flg):
 
     print_stats()
 
-    gym_ai = OpenAIGym(GAME)
-    gen = Generation()
-    pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount)
+    # gym_ai = OpenAIGym(GAME)
+    # gen = Generation()
+    # pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount)
 
     # env = gym.make(GAME)
     # #env = env.Marvin

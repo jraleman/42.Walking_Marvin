@@ -64,6 +64,79 @@ def parser():
         required=False)
 
     parser.add_argument(
+        '-n',
+        '--name',
+        action='store_true',
+        help='the name of the game (enviroment)',
+        required=False)
+
+    parser.add_argument(
+        '-g',
+        '--generations',
+        action='store_true',
+        help='number of max generations to be ',
+        required=False)
+
+    parser.add_argument(
+        '-p',
+        '--population',
+        action='store_true',
+        help='count',
+        required=False)
+
+    parser.add_argument(
+        '-r',
+        '--rate',
+        action='store_true',
+        help='mutuation ',
+        required=False)
+
+    parser.add_argument(
+        '-m',
+        '--movement',
+        action='store_true',
+        help='number of steps (movement)',
+        required=False)
+
+
+
+
+
+    parser.add_argument(
+        '--log',
+        action='store',
+        dest='path',
+        help='save weights to a file after running the program',
+        required=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    parser.add_argument(
         '--version',
         action='version',
         version='%(prog)s ' + "0.1.0",
@@ -78,8 +151,24 @@ class MarvinFlags(object):
     def __init__(self, version):
         #self.flags = flags
         self.flags = parser()
+
+        # GAME = 'Marvin-v0'
+        # MAX_STEPS = 1000
+        # MAX_GENERATIONS = 100
+        # POPULATION_COUNT = 42
+        # MUTATION_RATE = 0.042
+
+
         self.version = version
         return None
+
+
+    # Make this into flags so they can be edited
+    # Save string for GAME
+    # Safe int for MAX_STEPS, MAX_GENERATIONS and POPULATION_COUNT
+    # Safe float for MUTATION_RATE, up to 3 digits of precision
+        # Global variables.
+
 
     def runFlags(self):
         if self.flags['walk']:
@@ -117,6 +206,66 @@ class MarvinFlags(object):
     #     return None
     #
 
+
+
+
+
+
+
+
+
+
+################################################################################
+# These flags doesn't depends on anything, must be used with everything
+################################################################################
+
+
+        # MAX_STEPS = 1000
+        # MAX_GENERATIONS = 100
+        # POPULATION_COUNT = 42
+        # MUTATION_RATE = 0.042
+
+
+def flagName(self, val):
+	self.game_name = val
+	return None
+
+def flagGenerations(self, val):
+	self.max_generations = val
+	return None
+
+def flagPopulation(self, val):
+	self.population_count = val
+	return None
+
+def flagMovement(self):
+	self.max_steps = val
+	return None
+
+def flagRate(self, val):
+	self.mutation_rate = val
+	return None
+
+
+
+################################################################################
+
+def getGameName(self):
+	return self.game_name
+
+def getMaxGenerations(self):
+	return self.max_generations
+
+def getPopulationCound(self):
+	return self.population_count
+
+
+
+
+
+
+
+
     def flagLoad(self):
         print ("Load flag works!")
         print ("Path is : " + str(self.flags['path']))
@@ -148,6 +297,27 @@ class MarvinFlags(object):
     #         #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
     #     env.monitor.close()
     #     return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def flagLog(self, path):
         """
