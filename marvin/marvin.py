@@ -27,7 +27,7 @@ __license__ = "MIT"
 # Gym AI dependencies
 import gym
 from lib.enviroment import Marvin
-#from lib.gym_ai_env import GymAIEnv
+#from lib.open_ai_gym import OpenAIGym
 
 # NeuralNetwork dependencies
 from lib.neural_net import NeuralNet
