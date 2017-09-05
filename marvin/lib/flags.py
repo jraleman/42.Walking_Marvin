@@ -22,7 +22,8 @@ import argparse
 
 
 class MarvinFlags(object):
-    def __init__(self, flags, version):
+    def __init__(self, env, flags, version):
+        self.env = env
         self.flags = flags
         self.version = version
         return None
