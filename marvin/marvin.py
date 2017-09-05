@@ -28,15 +28,15 @@ __license__ = "MIT"
 # Gym AI dependencies
 import gym
 from lib.enviroment import Marvin
-#from lib.open_ai_gym import OpenAIGym
+from lib.open_ai_gym import OpenAIGym
 
 # NeuralNetwork dependencies
 from lib.neural_net import NeuralNet
 from lib.population import Population
-#from lib.generation import Generation
+from lib.generation import Generation
 
 # Modules to parse flags, save logs, and aux functions.
-from lib.flags import MarvinFlags, parser
+from lib.flags import MarvinFlags
 from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
@@ -46,12 +46,16 @@ MAX_GENERATIONS = 100
 POPULATION_COUNT = 42
 MUTATION_RATE = 0.042
 
+def print_stats():
+    print("lol")
+
 def main(flg):
     """
     Main entry point of the program.
     """
 
-    print("lol")
+    print_stats()
+
 
     # insert gymai class HERE
     #    x = GymAI(name)
@@ -59,11 +63,6 @@ def main(flg):
     #    gen = Generation()
     # insert population class here
     #    pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
-
-
-
-
-
 
     # env = gym.make(GAME)
     # #env = env.Marvin
@@ -102,6 +101,11 @@ def main(flg):
 
     #pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
 
+
+
+################################################################################
+# flg.runFlags here
+################################################################################
 
     # # Generations ->
     # for gen in range(MAX_GENERATIONS):
@@ -159,13 +163,5 @@ if __name__ == "__main__":
     This is executed when run from the command line
     """
 
-    # Remove this soon
-    env = 0
-
-
-    # Make it so MarvinFlags and MarvinLogs just accept one argument: __version__
-    flg = MarvinFlags(env, parser(), __version__)
-    log = 0
-    #log = MarvinLogs(__version__)
-
+    flg = MarvinFlags(__version__)
     main(flg)
