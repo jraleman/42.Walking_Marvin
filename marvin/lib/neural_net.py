@@ -1,6 +1,8 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
+# 42 HEADER GOES HERE
+
 from __future__ import print_function
 import numpy as np
 
@@ -26,7 +28,6 @@ class NeuralNet :
 
 
     def printWeightsandBiases(self):
-
         print("--------------------------------")
         print("Weights :\n[", end="")
         for i in range(len(self.weights)):
@@ -49,17 +50,8 @@ class NeuralNet :
             print("\b],", end="")
         print("\b \n]\n--------------------------------\n")
 
-################################################################################
-# THIS IS NOT USED ANYWHERE????
-# Sigmoid function
-# Type of activation function for artifical neurons.
-
-def sigmoid(x):
-    return 1.0/(1.0 + np.exp(-x))
-
-# Real-valued and differentiable (you need this to find gradients.
-# Analytic tractability for the differentiaton operation.
-# It's an acceptable mathematical representation of biological neuron behaviour.
-# The output shows if the neuron is firing or not.
-
-################################################################################
+    def sigmoid(x):
+        """
+        Type of activation function for artifical neurons.
+        """
+        return 1.0/(1.0 + np.exp(-x))

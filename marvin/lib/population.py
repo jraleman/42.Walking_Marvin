@@ -1,11 +1,9 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
-from lib.neural_net import NeuralNet
+# 42 HEADER GOES HERE
 
-################################################################################
-# Population / Species
-################################################################################
+from lib.neural_net import NeuralNet
 
 class Population :
     def __init__(self, populationCount, mutationRate, nodeCount):

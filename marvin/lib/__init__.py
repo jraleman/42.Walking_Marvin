@@ -16,6 +16,8 @@
 __all__ = [
     "enviroment",
     "flags",
+    "generation",
+    "gym_ai_env",
     "logs",
     "neural_net",
     "population",

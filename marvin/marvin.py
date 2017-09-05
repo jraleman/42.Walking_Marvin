@@ -15,19 +15,24 @@
 
 """
 Walking Marvin
+
+<description goes here>
 """
 
-__author__ = "Jose Ramon Aleman, Gerardo Solis"
+# Project's Metadata
+__author__ = "jraleman, corezip"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
-# Python modules
+# Gym AI dependencies
 import gym
+from lib.enviroment import Marvin
+#from lib.gym_ai_env import GymAIEnv
 
 # NeuralNetwork dependencies
-from lib.enviroment import Marvin
 from lib.neural_net import NeuralNet
 from lib.population import Population
+#from lib.generation import Generation
 
 # Modules to parse flags, save logs, and aux functions.
 from lib.flags import MarvinFlags, parser
@@ -37,25 +42,34 @@ from lib.utilities import map_range, normalize_array, scale_array, debug_object
 # Global variables.
 GAME = 'Marvin-v0'
 MAX_STEPS = 1000
-MAX_GENERATIONS = 30
-POPULATION_COUNT = 1000
+MAX_GENERATIONS = 100
+POPULATION_COUNT = 42
 MUTATION_RATE = 0.042
 
-# initialize all of these first inside the if main
-def main(env, nn, flg, log):
+def main(flg, log):
     """
-    Main entry point of the project
+    Main entry point of the program.
     """
 
-    #print type(env)
+    print("lol")
 
-    # log = logging.getLogger("my-logger")
-    # # log.info("Hello, world")
+    # insert gymai class HERE
+    #    x = GymAI(name)
+    # insert generation class here
+    #    gen = Generation()
+    # insert population class here
+    #    pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
+
+
+
+
+
+
     # env = gym.make(GAME)
     # #env = env.Marvin
     # #env.reset()
     # #env = TraceRecordingWrapper(env)
-    # print type(env)
+
     # #env = wrappers.Monitor(env, './videos', force='True')
     #
     #
@@ -78,23 +92,23 @@ def main(env, nn, flg, log):
     # actionMax = env.action_space.high
     #
     #
-    # pop = specs.Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
+    # pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
     # bestNeuralNets = []
     #
-    # print("\nObservation\n--------------------------------")
-    # print("Shape :", in_dimen, " \n High :", obsMax, " \n Low :", obsMin)
-    # print("\nAction\n--------------------------------")
-    # print("Shape :", out_dimen, " | High :", actionMax, " | Low :", actionMin,"\n")
     # #env.render()
     #
     #
     #
+
+    #pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
+
+
     # # Generations ->
     # for gen in range(MAX_GENERATIONS):
 
 
 
-        # if flags != NULL:
+        # if flags != None:
             #flg.runFlags()
 
 
@@ -115,24 +129,6 @@ def main(env, nn, flg, log):
     #             env.render()
     #             action = nn.getOutput(observation)
     #             observation, reward, done, info = env.step(action)
-    #
-    #
-    #             # print ("\nObservation : ")
-    #             # print (observation)
-    #             # #time.sleep(0.005)
-    #             # print ("\nReward      : ")
-    #             # print (reward)
-    #             # #time.sleep(0.005)
-    #             # print ("\nDone        : ")
-    #             # print (done)
-    #             # #time.sleep(0.005)
-    #             # print ("\nInfo        : ")
-    #             # print (info)
-    #             # #time.sleep(0.005)
-    #
-    #             #print("\nObservation\n--------------------------------")
-    #             #print("Generation : %3d  |  Min : %5.00f  |  Avg : %5.00f  |  Max : %5.00f  " % (gen+1, minFit, genAvgFit, maxFit) )
-    #
     #
     #             totalReward += reward
     #             if done:
@@ -156,39 +152,20 @@ def main(env, nn, flg, log):
 
     #flags.recordBestBots(bestNeuralNets, env)
 
-    #uploadSimulation()
-
     #flags.replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
 
-
-
-
 if __name__ == "__main__":
-    """ This is executed when run from the command line """
-    # make this into a structure, type openai gym
-    env = gym.make(GAME)
-    observation = env.reset()
-    in_dimen = env.observation_space.shape[0]
-    out_dimen = env.action_space.shape[0]
-    obsMin = env.observation_space.low
-    obsMax = env.observation_space.high
-    actionMin = env.action_space.low
-    actionMax = env.action_space.high
+    """
+    This is executed when run from the command line
+    """
+
+    # Remove this soon
+    env = 0
+
+
+    # Make it so MarvinFlags and MarvinLogs just accept one argument: __version__
     flg = MarvinFlags(env, parser(), __version__)
-    #log = MarvinLogs(env, parser(), __version__)
+    log = 0
+    #log = MarvinLogs(__version__)
 
-    ## make this into a structure too, type nn network or something like that
-    pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
-
-
-    # Add these into the
-    bestNeuralNets = []
-    genAvgFit = 0.0
-    minFit =  1000000
-    maxFit = -1000000
-    maxNeuralNet = None
-    totalReward = 0
-    action = None
-
-
-    #main(mrv, pop, nnt)
+    main(flg, log)
