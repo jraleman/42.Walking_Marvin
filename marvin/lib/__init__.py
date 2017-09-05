@@ -18,7 +18,6 @@ __all__ = [
     "flags",
     "generation",
     "open_ai_gym",
-    "logs",
     "neural_net",
     "population",
     "utilities"

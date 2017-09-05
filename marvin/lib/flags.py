@@ -14,15 +14,14 @@
 # **************************************************************************** #
 
 # Python modules
+import os
+import logging
 import argparse
 
-
-# TODO:
-# if string is capitalize, lowercase it and then parse it.
-# If not, error (show argparse error or something)
-
-
 class MarvinFlags(object):
+    """
+    ..........
+    """
     def __init__(self, env, flags, version):
         self.env = env
         self.flags = flags
@@ -97,6 +96,31 @@ class MarvinFlags(object):
         #    self.load()
         #else:
         #    print ("No arguments given")
+
+
+def create_log():
+    """
+    ...
+    """
+
+    handler = logging.handlers.WatchedFileHandler(
+    os.environ.get("LOGFILE", "lol.log"))
+    formatter = logging.Formatter(logging.BASIC_FORMAT)
+    logging.handler.setFormatter(formatter)
+    root = logging.getLogger()
+    root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
+    root.addHandler(handler)
+
+    try:
+        exit(main())
+    except Exception:
+        logging.exception("Exception in main()")
+        exit(1)
+
+
+# TODO:
+# if string is capitalize, lowercase it and then parse it.
+# If not, error (show argparse error or something)
 
 def parser():
     parser = argparse.ArgumentParser(

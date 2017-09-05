@@ -16,12 +16,14 @@
 from lib.neural_net import NeuralNet
 
 class Population :
+    """
+    Class ...
+    """
     def __init__(self, populationCount, mutationRate, nodeCount):
         self.nodeCount = nodeCount
         self.popCount = populationCount
         self.m_rate = mutationRate
         self.population = [NeuralNet(nodeCount) for i in range(populationCount)]
-
 
     def createChild(self, nn1, nn2):
         child = NeuralNet(self.nodeCount)
@@ -41,7 +43,6 @@ class Population :
                     else:
                         child.biases[i][j] = nn2.biases[i][j]
         return child
-
 
     def createNewGeneration(self, bestNN):
         nextGen = []

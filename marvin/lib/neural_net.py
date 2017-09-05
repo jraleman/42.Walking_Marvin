@@ -17,6 +17,9 @@ from __future__ import print_function
 import numpy as np
 
 class NeuralNet :
+    """
+    Class ...
+    """
     def __init__(self, nodeCount):
         self.fitness = 0.0
         self.nodeCount = nodeCount

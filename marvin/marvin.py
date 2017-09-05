@@ -36,7 +36,6 @@ from lib.population import Population
 
 # Modules to parse flags, save logs, and aux functions.
 from lib.flags import MarvinFlags, parser
-from lib.logs import MarvinLogs
 from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
@@ -46,7 +45,7 @@ MAX_GENERATIONS = 100
 POPULATION_COUNT = 42
 MUTATION_RATE = 0.042
 
-def main(flg, log):
+def main(flg):
     """
     Main entry point of the program.
     """
@@ -168,4 +167,4 @@ if __name__ == "__main__":
     log = 0
     #log = MarvinLogs(__version__)
 
-    main(flg, log)
+    main(flg)
