@@ -16,7 +16,8 @@
 """
 Walking Marvin
 
-<description goes here>
+Uses OpenAI Gym with an environment called Marvin.
+The goal is to train Marvin to walk, having the training and walking process.
 """
 
 # Project's Metadata
