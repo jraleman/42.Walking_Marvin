@@ -13,6 +13,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+import gym
+
 class OpenAIGym(object):
     """
     Class to set up the Open AI Gym environment

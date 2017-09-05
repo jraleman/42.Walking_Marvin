@@ -47,7 +47,7 @@ POPULATION_COUNT = 42
 MUTATION_RATE = 0.042
 
 def print_stats():
-    print("lol")
+    print("Here is when the log is printed to the stdout")
 
 def main(flg):
     """
@@ -56,13 +56,9 @@ def main(flg):
 
     print_stats()
 
-
-    # insert gymai class HERE
-    #    x = GymAI(name)
-    # insert generation class here
-    #    gen = Generation()
-    # insert population class here
-    #    pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
+    gym_ai = OpenAIGym(GAME)
+    gen = Generation()
+    pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount)
 
     # env = gym.make(GAME)
     # #env = env.Marvin
@@ -103,15 +99,15 @@ def main(flg):
 
 
 
-################################################################################
-# flg.runFlags here
-################################################################################
 
     # # Generations ->
     # for gen in range(MAX_GENERATIONS):
 
 
 
+################################################################################
+# flg.runFlags here maybe
+################################################################################
         # if flags != None:
             #flg.runFlags()
 
@@ -154,8 +150,10 @@ def main(flg):
     #     #env.render()
         #if done: break
 
+################################################################################
+# flg.runFlags here maybe
+################################################################################
     #flags.recordBestBots(bestNeuralNets, env)
-
     #flags.replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
 
 if __name__ == "__main__":
