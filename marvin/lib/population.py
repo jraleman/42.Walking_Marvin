@@ -1,4 +1,7 @@
-from lib.nnet import NeuralNet
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
+from lib.neural_net import NeuralNet
 
 ################################################################################
 # Population / Species

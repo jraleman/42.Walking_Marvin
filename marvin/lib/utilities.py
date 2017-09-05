@@ -1,10 +1,12 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
 
-################################################################################
-# Utils / General Functions
-################################################################################
+import time
 
-
-def mapRange(value, leftMin, leftMax, rightMin, rightMax):
+def map_range(value, leftMin, leftMax, rightMin, rightMax):
+    """
+    ...
+    """
     # Figure out how 'wide' each range is
     leftSpan = leftMax - leftMin
     rightSpan = rightMax - rightMin
@@ -17,24 +19,27 @@ def mapRange(value, leftMin, leftMax, rightMin, rightMax):
     return rightMin + (valueScaled * rightSpan)
 
 
-def normalizeArray(aVal, aMin, aMax):
+def normalize_array(aVal, aMin, aMax):
+    """
+    ...
+    """
     res = []
     for i in range(len(aVal)):
         res.append( mapRange(aVal[i], aMin[i], aMax[i], -1, 1) )
     return res
 
-def scaleArray(aVal, aMin, aMax):
+def scale_array(aVal, aMin, aMax):
+    """
+    ...
+    """
     res = []
     for i in range(len(aVal)):
         res.append( mapRange(aVal[i], -1, 1, aMin[i], aMax[i]) )
     return res
 
-
-################################################################################
-# Debug
-################################################################################
-
-def what_is_this(object):
-	import time
+def debug_object(object):
+    """
+    ...
+    """
     print (object)
-    exit()
+    exit(42)

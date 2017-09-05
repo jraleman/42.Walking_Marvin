@@ -24,11 +24,15 @@ __license__ = "MIT"
 # Python modules
 import gym
 
-# Importing Class and Functions
-from lib.env import Marvin
+# NeuralNetwork dependencies
+from lib.enviroment import Marvin
+from lib.neural_net import NeuralNet
+from lib.population import Population
+
+# Modules to parse flags, save logs, and aux functions.
 from lib.flags import MarvinFlags, parser
-from lib.nnet import NeuralNet
-from lib.specs import Population
+from lib.logs import MarvinLogs
+from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
 GAME = 'Marvin-v0'
@@ -39,7 +43,9 @@ MUTATION_RATE = 0.042
 
 # initialize all of these first inside the if main
 def main(env, nn, flg, log):
-    """ Main entry point of the project """
+    """
+    Main entry point of the project
+    """
 
     #print type(env)
 
@@ -168,9 +174,14 @@ if __name__ == "__main__":
     obsMax = env.observation_space.high
     actionMin = env.action_space.low
     actionMax = env.action_space.high
+    flg = MarvinFlags(env, parser(), __version__)
+    #log = MarvinLogs(env, parser(), __version__)
 
     ## make this into a structure too, type nn network or something like that
     pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
+
+
+    # Add these into the
     bestNeuralNets = []
     genAvgFit = 0.0
     minFit =  1000000
@@ -179,11 +190,5 @@ if __name__ == "__main__":
     totalReward = 0
     action = None
 
-    # flag variables
-    # add parser inside class
-    flg = MarvinFlags(env, parser(), __version__)
 
-    # gym structure
-    # nn type structure
-    # flg
-    #main(arg1, arg2, arg3, log)
+    #main(mrv, pop, nnt)

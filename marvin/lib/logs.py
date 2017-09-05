@@ -16,13 +16,20 @@
 # Python modules
 import os
 import logging
-import logging.handlers
+
+class MarvinLogs(object):
+    def __init__(self):
+        return None
 
 def create_log():
+    """
+    ...
+    """
+
     handler = logging.handlers.WatchedFileHandler(
     os.environ.get("LOGFILE", "lol.log"))
     formatter = logging.Formatter(logging.BASIC_FORMAT)
-    handler.setFormatter(formatter)
+    logging.handler.setFormatter(formatter)
     root = logging.getLogger()
     root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
     root.addHandler(handler)

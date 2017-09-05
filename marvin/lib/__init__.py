@@ -14,11 +14,10 @@
 # **************************************************************************** #
 
 __all__ = [
-    "env",
-    "nnet",
-    "gens",
-    "specs",
-    "logs",
+    "enviroment",
     "flags",
-    "utils"
+    "logs",
+    "neural_net",
+    "population",
+    "utilities"
 ]

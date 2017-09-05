@@ -17,8 +17,9 @@
 import argparse
 
 
-#if string is capitalize, lowercase it and then parse it.
-#If not, error (show argparse error or something)
+# TODO:
+# if string is capitalize, lowercase it and then parse it.
+# If not, error (show argparse error or something)
 
 
 class MarvinFlags(object):
@@ -74,7 +75,7 @@ class MarvinFlags(object):
         env.monitor.close()
         return None
 
-    #def flagWalk(self):
+    # def flagWalk(self):
     #    print ("Walk flag works!")
 
     def flagLoad(self):
