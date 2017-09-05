@@ -1,14 +1,20 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
-# 42 HEADER GOES HERE
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    neural_net.py                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/09/05 01:36:21 by jaleman           #+#    #+#              #
+#    Updated: 2017/09/05 01:36:21 by jaleman          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 from __future__ import print_function
 import numpy as np
-
-################################################################################
-# Neural Network
-################################################################################
 
 class NeuralNet :
     def __init__(self, nodeCount):
@@ -25,7 +31,6 @@ class NeuralNet :
         for i in range(len(self.nodeCount)-1):
             output = np.reshape( np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
         return output
-
 
     def printWeightsandBiases(self):
         print("--------------------------------")
