@@ -32,8 +32,14 @@ class NeuralNet :
     def getOutput(self, input):
         output = input
         for i in range(len(self.nodeCount)-1):
-            output = np.reshape( np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
+            output = np.reshape(np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
         return output
+
+    def sigmoid(x):
+        """
+        Type of activation function for artifical neurons.
+        """
+        return 1.0/(1.0 + np.exp(-x))
 
     def printWeightsandBiases(self):
         print("--------------------------------")
@@ -57,9 +63,3 @@ class NeuralNet :
                     print(" %5.2f," % (self.biases[i][j]), end="")
             print("\b],", end="")
         print("\b \n]\n--------------------------------\n")
-
-    def sigmoid(x):
-        """
-        Type of activation function for artifical neurons.
-        """
-        return 1.0/(1.0 + np.exp(-x))

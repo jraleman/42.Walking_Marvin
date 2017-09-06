@@ -93,8 +93,8 @@ def main(flg):
             for step in range(max_steps):
                 gym_ai.render
                 gym_ai.setAction(nn.getOutput(observation))
-                action = gym_ai.getAction()
-                observation, reward, done, info = action
+                #action = nn.getOutput(observation)
+                observation, reward, done, info = gym_ai.getAction()
                 total_reward += reward
                 if done:
                     break
