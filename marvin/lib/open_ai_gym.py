@@ -54,6 +54,8 @@ class OpenAIGym(object):
         return self.mutation_rate
     def getEnv(self):
         return self.env
+    def getRender(self):
+        return self.env.render()
     def getObservation(self):
         return self.observation
     def getInDimen(self):

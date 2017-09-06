@@ -13,6 +13,9 @@
 #                                                                              #
 # **************************************************************************** #
 
+import copy
+import bisect
+import random
 from lib.neural_net import NeuralNet
 
 class Population :
@@ -24,6 +27,13 @@ class Population :
         self.popCount = populationCount
         self.m_rate = mutationRate
         self.population = [NeuralNet(nodeCount) for i in range(populationCount)]
+
+    def getPopulationCount(self):
+        return self.popCount
+
+    def setPopulationCount(self, val):
+        self.popCount = val
+        return None
 
     def createChild(self, nn1, nn2):
         child = NeuralNet(self.nodeCount)
