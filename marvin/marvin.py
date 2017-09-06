@@ -27,6 +27,8 @@ __license__ = "MIT"
 
 # Gym AI dependencies
 import gym
+import copy
+import numpy as np
 from lib.enviroment import Marvin
 from lib.open_ai_gym import OpenAIGym
 
@@ -64,17 +66,14 @@ def main(flg):
     node_count = gym_ai.getNodeCount()
     population_count = gym_ai.getPopulationCount()
     mutation_rate = gym_ai.getMutationRate()
-
-
-    #         observation = gym_ai.getObservation()s
-
+    observation = gym_ai.getObservation()
     #debug_object(gym_ai)
 
     # Generation class declaration
     gen = Generation()
     avg_fit = gen.getAvgFit()
     min_fit = gen.getMinFit()
-    max_fix = gen.getMaxFit()
+    max_fit = gen.getMaxFit()
     max_neural_net = gen.getMaxNeuralNet()
     total_reward = gen.getTotalReward()
     #debug_object(gen)
@@ -87,59 +86,25 @@ def main(flg):
 
     for gen in range(max_generations):
 
-        #
-        # Maybe run the flag method here????
-        #
+        for nn in pop.population:
+            total_reward = 0
+            tmp_observation = observation
 
-         for nn in pop.population:
+            for step in range(max_steps):
+                gym_ai.render
+                gym_ai.setAction(nn.getOutput(observation))
+                action = gym_ai.getAction()
+                observation, reward, done, info = action
+                total_reward += reward
+                if done:
+                    break
 
-                # tmp_observation = observation
-
-    #         totalReward = 0
-                # setTotra(0)
-
-
-    #
-    #         # Steps ->
-    #         for step in range(max_steps):
-
-
-
-    #             action = nn.getOutput(observation)
-
-
-
-    #             observation, reward, done, info = env.step(action)
-
-
-
-    #
-
-
-
-    #             totalReward += reward
-
-
-
-
-    #             if done:
-    #                 break
-    #
-    #         nn.fitness = totalReward
-
-
-    #         minFit = min(minFit, nn.fitness)
-    #         genAvgFit += nn.fitness
-
-
-    #         if nn.fitness > maxFit :
-
-
-    #             maxFit = nn.fitness
-    #             maxNeuralNet = copy.deepcopy(nn);
-    #
-
-
+            nn.fitness = total_reward
+            min_fit = min(min_fit, nn.fitness)
+            avg_fit += nn.fitness
+            if nn.fitness > max_fit:
+                max_fit = nn.fitness
+                max_neural_net = copy.deepcopy(nn);
 
 
 
@@ -148,13 +113,15 @@ def main(flg):
     #     genAvgFit/=pop.popCount
     #     print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
     #     pop.createNewGeneration(maxNeuralNet)
-
-
 ################################################################################
 # flg.runFlags here maybe
 ################################################################################
     #flags.recordBestBots(bestNeuralNets, env)
     #flags.replayBestBots(bestNeuralNets, max(1, int(math.ceil(max_generations/10.0))), 0.0625)
+
+
+
+
 
 if __name__ == "__main__":
     """

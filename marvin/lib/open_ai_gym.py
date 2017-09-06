@@ -26,11 +26,13 @@ class OpenAIGym(object):
         self.population_count = 42
         self.mutation_rate = 0.042
         self.env = gym.make(self.game_name)
+        self.render = self.env.render()
         self.observation = self.env.reset()
         self.in_dimen = self.env.observation_space.shape[0]
         self.out_dimen = self.env.action_space.shape[0]
         self.obs_min = self.env.observation_space.low
         self.obs_max = self.env.observation_space.high
+        self.action = None
         self.action_min = self.env.action_space.low
         self.action_max = self.env.action_space.high
 
@@ -62,6 +64,8 @@ class OpenAIGym(object):
         return self.obs_min
     def getObsMax(self):
         return self.obs_max
+    def getAction(self):
+        return self.action
     def getActionMin(self):
         return self.action_min
     def getActionMax(self):
@@ -102,6 +106,9 @@ class OpenAIGym(object):
         return None
     def setObsMax(self, val):
         self.obs_max = val
+        return None
+    def setAction(self, val):
+        self.action = self.env.step(val)
         return None
     def setActionMin(self, val):
         self.action_min = val
