@@ -57,7 +57,7 @@ class OpenAIGym(object):
     def getRender(self):
         return self.env.render()
     def getObservation(self):
-        return self.observation
+        return self.env.reset()
     def getInDimen(self):
         return self.in_dimen
     def getOutDimen(self):
@@ -90,12 +90,6 @@ class OpenAIGym(object):
         return None
     def setMutationRate(self, val):
         self.mutation_rate = val
-        return None
-    def setEnv(self, val):
-        self.env = val
-        return None
-    def setObservation(self, val):
-        self.observation = val
         return None
     def setInDimen(self, val):
         self.in_dimen = val

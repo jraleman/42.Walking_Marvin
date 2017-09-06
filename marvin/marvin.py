@@ -83,29 +83,14 @@ def main(flg):
         max_fit = -1000000
         max_neural_net = None
 
-
         for nn in pop.population:
             total_reward = 0
             observation = gym_ai.getObservation()
 
             for step in range(max_steps):
-
-                # set render()
-
-                # get render()
                 gym_ai.getRender()
-
-
                 gym_ai.setAction(nn.getOutput(observation))
-                #action = nn.getOutput(observation)
                 observation, reward, done, info = gym_ai.getAction()
-
-
-                # print (observation)
-                # print (reward)
-                # print (done)
-                # print (info)
-
                 total_reward += reward
                 if done:
                     break
