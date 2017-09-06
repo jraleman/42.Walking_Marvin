@@ -64,6 +64,10 @@ def main(flg):
     node_count = gym_ai.getNodeCount()
     population_count = gym_ai.getPopulationCount()
     mutation_rate = gym_ai.getMutationRate()
+
+
+    #         observation = gym_ai.getObservation()s
+
     #debug_object(gym_ai)
 
     # Generation class declaration
@@ -81,20 +85,18 @@ def main(flg):
 
 ################################################################################
 
-    # for gen in range(max_generations):
+    for gen in range(max_generations):
 
         #
         # Maybe run the flag method here????
         #
 
-    #
-    #     # Species ->
-    #     for nn in pop.population:
+         for nn in pop.population:
 
+                # tmp_observation = observation
 
-
-    #         observation = env.reset()
     #         totalReward = 0
+                # setTotra(0)
 
 
     #
