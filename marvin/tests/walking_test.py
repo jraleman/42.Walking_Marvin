@@ -960,6 +960,33 @@ if __name__=="__main__":
                 action = nn.getOutput(observation)
                 observation, reward, done, info = env.step(action)
 
+                # print ("Observ : " + observation)
+                # print ("Reward : " + reward)
+                # print ("Done   : " + done)
+                # print ("Info   : " + info)
+                # f=open('prueba.txt','w')
+                np.savez('prueba',
+                    observasiones=observation, recompensa=reward,
+                    terminado=done, informacion=info)
+                print ('\n\n\nOriginal:\n\n\n')
+                print (observation)
+                print (reward)
+                print (done)
+                print (info)
+                z1 = np.load('prueba.npz')
+                observation = z1['observasiones']
+                reward = z1['recompensa']
+                done = z1['terminado']
+                info = z1['informacion']
+                print ('\n\n\n\nRestore:\n\n\n')
+                # print (z2)
+                print (observation)
+                print (reward)
+                print (done)
+                print (info)
+
+                exit(0)
+
 
                 # print ("\nObservation : ")
                 # print (observation)
