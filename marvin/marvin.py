@@ -66,7 +66,7 @@ def main(flg):
     node_count = gym_ai.getNodeCount()
     population_count = gym_ai.getPopulationCount()
     mutation_rate = gym_ai.getMutationRate()
-    observation = gym_ai.getObservation()
+    #observation = gym_ai.getObservation()
     #debug_object(gym_ai)
 
     # Generation class declaration
@@ -88,13 +88,24 @@ def main(flg):
 
         for nn in pop.population:
             total_reward = 0
-            tmp_observation = observation
+            observation = gym_ai.getObservation()
 
             for step in range(max_steps):
                 gym_ai.render
                 gym_ai.setAction(nn.getOutput(observation))
                 #action = nn.getOutput(observation)
                 observation, reward, done, info = gym_ai.getAction()
+
+
+                print (observation)
+                print (reward)
+                print (done)
+                print (info)
+
+                #exit(0)
+
+
+
                 total_reward += reward
                 if done:
                     break
@@ -106,13 +117,11 @@ def main(flg):
                 max_fit = nn.fitness
                 max_neural_net = copy.deepcopy(nn);
 
-
-
-
-    #     bestNeuralNets.append(maxNeuralNet)
-    #     genAvgFit/=pop.popCount
-    #     print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
-    #     pop.createNewGeneration(maxNeuralNet)
+        bestNeuralNets.append(maxNeuralNet)
+        genAvgFit/=pop.popCount
+        print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
+        pop.createNewGeneration(maxNeuralNet)
+        
 ################################################################################
 # flg.runFlags here maybe
 ################################################################################
