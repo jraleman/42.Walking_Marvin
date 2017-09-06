@@ -39,12 +39,19 @@ from lib.generation import Generation
 from lib.flags import MarvinFlags
 from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
+
+
+
+
 # Global variables.
-GAME = 'Marvin-v0'
-MAX_STEPS = 1000
-MAX_GENERATIONS = 100
-POPULATION_COUNT = 42
-MUTATION_RATE = 0.042
+# GAME = 'Marvin-v0'
+# MAX_STEPS = 1000
+# MAX_GENERATIONS = 100
+# POPULATION_COUNT = 42
+# MUTATION_RATE = 0.042
+
+
+
 
 def print_stats():
     print("Here is when the log is printed to the stdout")
@@ -55,69 +62,63 @@ def main(flg):
     """
 
     print_stats()
+    gym_ai = OpenAIGym('Marvin-v0')
+    debug_object(gym_ai)
 
-    # gym_ai = OpenAIGym(GAME)
+    #
+    # ALL OF THESE ISN'T NEEDED, JUST DELETE THEM.
+    #
     # gen = Generation()
     # pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount)
-
     # env = gym.make(GAME)
     # #env = env.Marvin
     # #env.reset()
     # #env = TraceRecordingWrapper(env)
-
     # #env = wrappers.Monitor(env, './videos', force='True')
-    #
-    #
     # # Enviroment principal, valores random al inicio
     # observation = env.reset()
-    #
-    #
-    # #
     # in_dimen = env.observation_space.shape[0]
     # out_dimen = env.action_space.shape[0]
-    #
-    # #khe_berga(in_dimen)
-    #
-    # #
     # obsMin = env.observation_space.low
     # obsMax = env.observation_space.high
-    #
-    #
     # actionMin = env.action_space.low
     # actionMax = env.action_space.high
-    #
-    #
-    # pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
     # bestNeuralNets = []
-    #
+    # pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
     # #env.render()
     #
     #
-    #
+
+
+
+
+
 
     #pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
-
-
 
 
     # # Generations ->
     # for gen in range(MAX_GENERATIONS):
 
-
-
-################################################################################
-# flg.runFlags here maybe
-################################################################################
         # if flags != None:
             #flg.runFlags()
 
 
 
+    #
+    #     DELETE THESEEE (THIS IS FOR GENERATIONS    )
+    #
     #     genAvgFit = 0.0
     #     minFit =  1000000
     #     maxFit = -1000000
     #     maxNeuralNet = None
     #
+
+
+
+
+
+
     #
     #     # Species ->
     #     for nn in pop.population:
