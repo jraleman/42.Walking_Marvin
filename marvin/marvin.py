@@ -39,19 +39,8 @@ from lib.generation import Generation
 from lib.flags import MarvinFlags
 from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
-
-
-
-
 # Global variables.
-# GAME = 'Marvin-v0'
-# MAX_STEPS = 1000
-# MAX_GENERATIONS = 100
-# POPULATION_COUNT = 42
-# MUTATION_RATE = 0.042
-
-
-
+GAME_NAME = 'Marvin-v0'
 
 def print_stats():
     print("Here is when the log is printed to the stdout")
@@ -61,101 +50,110 @@ def main(flg):
     Main entry point of the program.
     """
 
+    # Just to see if anything gives me an error as of now.
     print_stats()
-    gym_ai = OpenAIGym('Marvin-v0')
-    debug_object(gym_ai)
 
-    #
-    # ALL OF THESE ISN'T NEEDED, JUST DELETE THEM.
-    #
+################################################################################
+# Objects and class declarations
+################################################################################
+
+    # OpenAIGym class and method declarations
+    # gym_ai = OpenAIGym(GAME_NAME)
+    # max_steps = gym_ai.getMaxSteps()
+    # max_generations = gym_ai.getMaxGenerations()
+    # node_count = gym_ai.getNodeCount()
+    # population_count = gym_ai.getPopulationCount()
+    # mutation_rate = gym_ai.getMutationRate()
+    # debug_object(gym_ai)
+
+    # Generation class declaration
     # gen = Generation()
-    # pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount)
-    # env = gym.make(GAME)
-    # #env = env.Marvin
-    # #env.reset()
-    # #env = TraceRecordingWrapper(env)
-    # #env = wrappers.Monitor(env, './videos', force='True')
-    # # Enviroment principal, valores random al inicio
-    # observation = env.reset()
-    # in_dimen = env.observation_space.shape[0]
-    # out_dimen = env.action_space.shape[0]
-    # obsMin = env.observation_space.low
-    # obsMax = env.observation_space.high
-    # actionMin = env.action_space.low
-    # actionMax = env.action_space.high
-    # bestNeuralNets = []
-    # pop = Population(POPULATION_COUNT, MUTATION_RATE, [in_dimen, 13, 8, 13, out_dimen])
-    # #env.render()
-    #
-    #
+    # avg_fit = gen.getAvgFit()
+    # min_fit = gen.getMinFit()
+    # max_fix = gen.getMaxFit()
+    # max_neural_net = gen.getMaxNeuralNet()
+    # total_reward = gen.getTotalReward()
 
+    # debug_object(gen)
 
+    # Population class declaration
+    # pop = Population(population_count, mutation_rate, node_count)
+    # debug_object(pop)
 
+################################################################################
 
+    # for gen in range(max_generations):
 
-
-    #pop = Population(POPULATION_COUNT, MUTATION_RATE, node_count)
-
-
-    # # Generations ->
-    # for gen in range(MAX_GENERATIONS):
-
-        # if flags != None:
-            #flg.runFlags()
-
-
-
-    #
-    #     DELETE THESEEE (THIS IS FOR GENERATIONS    )
-    #
-    #     genAvgFit = 0.0
-    #     minFit =  1000000
-    #     maxFit = -1000000
-    #     maxNeuralNet = None
-    #
-
-
-
-
-
+        #
+        # Maybe run the flag method here????
+        #
 
     #
     #     # Species ->
     #     for nn in pop.population:
+
+
+
     #         observation = env.reset()
     #         totalReward = 0
+
+
     #
     #         # Steps ->
-    #         for step in range(MAX_STEPS):
-    #             env.render()
+    #         for step in range(max_steps):
+
+
+
     #             action = nn.getOutput(observation)
+
+
+
     #             observation, reward, done, info = env.step(action)
+
+
+
     #
+
+
+
     #             totalReward += reward
+
+
+
+
     #             if done:
-    #
-    #                 #exit()
     #                 break
     #
     #         nn.fitness = totalReward
+
+
     #         minFit = min(minFit, nn.fitness)
     #         genAvgFit += nn.fitness
+
+
     #         if nn.fitness > maxFit :
+
+
     #             maxFit = nn.fitness
     #             maxNeuralNet = copy.deepcopy(nn);
     #
+
+
+
+
+
+
     #     bestNeuralNets.append(maxNeuralNet)
     #     genAvgFit/=pop.popCount
     #     print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
     #     pop.createNewGeneration(maxNeuralNet)
-    #     #env.render()
-        #if done: break
+
 
 ################################################################################
 # flg.runFlags here maybe
 ################################################################################
     #flags.recordBestBots(bestNeuralNets, env)
-    #flags.replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
+    #flags.replayBestBots(bestNeuralNets, max(1, int(math.ceil(max_generations/10.0))), 0.0625)
 
 if __name__ == "__main__":
     """

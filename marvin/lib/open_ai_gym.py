@@ -20,7 +20,12 @@ class OpenAIGym(object):
     Class to set up the Open AI Gym environment
     """
     def __init__(self, game):
-        self.env = gym.make(game)
+        self.game_name = game
+        self.max_steps = 1000
+        self.max_generations = 100
+        self.population_count = 42
+        self.mutation_rate = 0.042
+        self.env = gym.make(self.game_name)
         self.observation = self.env.reset()
         self.in_dimen = self.env.observation_space.shape[0]
         self.out_dimen = self.env.action_space.shape[0]
@@ -28,20 +33,23 @@ class OpenAIGym(object):
         self.obs_max = self.env.observation_space.high
         self.action_min = self.env.action_space.low
         self.action_max = self.env.action_space.high
+
         # Why 13, 8 and 13??? lol!
         self.node_count = [self.in_dimen, 13, 8, 13, self.out_dimen]
-
-
-        # GAME = 'Marvin-v0'
-        # MAX_STEPS = 1000
-        # MAX_GENERATIONS = 100
-        # POPULATION_COUNT = 42
-        # MUTATION_RATE = 0.042
-
 
         return None
 
     # Get methods
+    def getGameName(self):
+        return self.game_name
+    def getMaxGenerations(self):
+        return self.max_generations
+    def getPopulationCount(self):
+        return self.population_count
+    def getMaxSteps(self):
+        return self.max_steps
+    def getMutationRate(self, val):
+        return self.mutation_rate
     def getEnv(self):
         return self.env
     def getObservation(self):
@@ -60,18 +68,23 @@ class OpenAIGym(object):
         return self.action_max
     def getNodeCount(self):
         return self.node_count
-    def getGameName(self):
-        return self.game_name
-    def getMaxGenerations(self):
-        return self.max_generations
-    def getPopulationCound(self):
-        return self.population_count
-    def getMaxSteps(self):
-        return self.max_steps
-    def getMutationRate(self, val):
-        return self.mutation_rate
 
     # Set methods
+    def setGameName(self, val):
+        self.game_name = val
+        return None
+    def setMaxGenerations(self, val):
+        self.max_generations = val
+        return None
+    def setPopulationCount(self, val):
+        self.population_count = val
+        return None
+    def setMaxSteps(self):
+        self.max_steps = val
+        return None
+    def setMutationRate(self, val):
+        self.mutation_rate = val
+        return None
     def setEnv(self, val):
         self.env = val
         return None
@@ -98,19 +111,4 @@ class OpenAIGym(object):
         return None
     def setNodeCount(self, val):
         self.node_count = val
-        return None
-    def setGameName(self, val):
-        self.game_name = val
-        return None
-    def setMaxGenerations(self, val):
-        self.max_generations = val
-        return None
-    def setPopulationCount(self, val):
-        self.population_count = val
-        return None
-    def setMaxSteps(self):
-        self.max_steps = val
-        return None
-    def setMutationRate(self, val):
-        self.mutation_rate = val
         return None
