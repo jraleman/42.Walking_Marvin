@@ -66,45 +66,45 @@ def main(flg):
     node_count = gym_ai.getNodeCount()
     population_count = gym_ai.getPopulationCount()
     mutation_rate = gym_ai.getMutationRate()
-    #observation = gym_ai.getObservation()
-    #debug_object(gym_ai)
 
     # Generation class declaration
     gen = Generation()
-    avg_fit = gen.getAvgFit()
-    min_fit = gen.getMinFit()
-    max_fit = gen.getMaxFit()
-    max_neural_net = gen.getMaxNeuralNet()
     total_reward = gen.getTotalReward()
-    #debug_object(gen)
+    best_neural_nets = gen.getBestNeuralNets()
 
     # Population class declaration
     pop = Population(population_count, mutation_rate, node_count)
-    #debug_object(pop)
 
 ################################################################################
 
     for gen in range(max_generations):
+        avg_fit = 0.0
+        min_fit =  1000000
+        max_fit = -1000000
+        max_neural_net = None
+
 
         for nn in pop.population:
             total_reward = 0
             observation = gym_ai.getObservation()
 
             for step in range(max_steps):
-                gym_ai.render
+
+                # set render()
+
+                # get render()
+                gym_ai.getRender()
+
+
                 gym_ai.setAction(nn.getOutput(observation))
                 #action = nn.getOutput(observation)
                 observation, reward, done, info = gym_ai.getAction()
 
 
-                print (observation)
-                print (reward)
-                print (done)
-                print (info)
-
-                #exit(0)
-
-
+                # print (observation)
+                # print (reward)
+                # print (done)
+                # print (info)
 
                 total_reward += reward
                 if done:
@@ -117,11 +117,13 @@ def main(flg):
                 max_fit = nn.fitness
                 max_neural_net = copy.deepcopy(nn);
 
-        bestNeuralNets.append(maxNeuralNet)
-        genAvgFit/=pop.popCount
-        print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
-        pop.createNewGeneration(maxNeuralNet)
-        
+        best_neural_nets.append(max_neural_net)
+        avg_fit /= pop.getPopulationCount()
+
+        print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen + 1, min_fit, avg_fit, max_fit))
+
+        pop.createNewGeneration(max_neural_net)
+
 ################################################################################
 # flg.runFlags here maybe
 ################################################################################
