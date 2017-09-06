@@ -21,15 +21,15 @@ class OpenAIGym(object):
     """
     def __init__(self, game):
         self.env = gym.make(game)
-        self.observation = env.reset()
-        self.in_dimen = env.observation_space.shape[0]
-        self.out_dimen = env.action_space.shape[0]
-        self.obs_min = env.observation_space.low
-        self.obs_max = env.observation_space.high
-        self.action_min = env.action_space.low
-        self.action_max = env.action_space.high
+        self.observation = self.env.reset()
+        self.in_dimen = self.env.observation_space.shape[0]
+        self.out_dimen = self.env.action_space.shape[0]
+        self.obs_min = self.env.observation_space.low
+        self.obs_max = self.env.observation_space.high
+        self.action_min = self.env.action_space.low
+        self.action_max = self.env.action_space.high
         # Why 13, 8 and 13??? lol!
-        self.node_count = [in_dimen, 13, 8, 13, out_dimen]
+        self.node_count = [self.in_dimen, 13, 8, 13, self.out_dimen]
 
 
         # GAME = 'Marvin-v0'
