@@ -48,7 +48,7 @@ class OpenAIGym(object):
         return self.population_count
     def getMaxSteps(self):
         return self.max_steps
-    def getMutationRate(self, val):
+    def getMutationRate(self):
         return self.mutation_rate
     def getEnv(self):
         return self.env
@@ -79,7 +79,7 @@ class OpenAIGym(object):
     def setPopulationCount(self, val):
         self.population_count = val
         return None
-    def setMaxSteps(self):
+    def setMaxSteps(self, val):
         self.max_steps = val
         return None
     def setMutationRate(self, val):

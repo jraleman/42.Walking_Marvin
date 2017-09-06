@@ -58,27 +58,26 @@ def main(flg):
 ################################################################################
 
     # OpenAIGym class and method declarations
-    # gym_ai = OpenAIGym(GAME_NAME)
-    # max_steps = gym_ai.getMaxSteps()
-    # max_generations = gym_ai.getMaxGenerations()
-    # node_count = gym_ai.getNodeCount()
-    # population_count = gym_ai.getPopulationCount()
-    # mutation_rate = gym_ai.getMutationRate()
-    # debug_object(gym_ai)
+    gym_ai = OpenAIGym(GAME_NAME)
+    max_steps = gym_ai.getMaxSteps()
+    max_generations = gym_ai.getMaxGenerations()
+    node_count = gym_ai.getNodeCount()
+    population_count = gym_ai.getPopulationCount()
+    mutation_rate = gym_ai.getMutationRate()
+    #debug_object(gym_ai)
 
     # Generation class declaration
-    # gen = Generation()
-    # avg_fit = gen.getAvgFit()
-    # min_fit = gen.getMinFit()
-    # max_fix = gen.getMaxFit()
-    # max_neural_net = gen.getMaxNeuralNet()
-    # total_reward = gen.getTotalReward()
-
-    # debug_object(gen)
+    gen = Generation()
+    avg_fit = gen.getAvgFit()
+    min_fit = gen.getMinFit()
+    max_fix = gen.getMaxFit()
+    max_neural_net = gen.getMaxNeuralNet()
+    total_reward = gen.getTotalReward()
+    #debug_object(gen)
 
     # Population class declaration
-    # pop = Population(population_count, mutation_rate, node_count)
-    # debug_object(pop)
+    pop = Population(population_count, mutation_rate, node_count)
+    #debug_object(pop)
 
 ################################################################################
 
