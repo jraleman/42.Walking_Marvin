@@ -851,86 +851,68 @@ import time
 
 
 
+
+
+
+
+import pickle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ################################################################################
 # Flags
 ################################################################################
 
 
-def replayBestBots(steps, sleep):
-    #choice = input("Do you want to watch the replay ?[Y/N] : ")
-    #if choice=='Y' or choice=='y':
-    #print("OK")
-    with open('pruebalol') as f:
-         bestNeuralNets = f.readlines()
-
-    #print(action[1])
-    #exit()
-
-    #for i in range(len(bestNeuralNets)):
-        #if (i+1)%steps == 0 :
-    observation = env.reset()
-    totalReward = 0
-    for step in range(MAX_STEPS):
-        
-        #time.sleep(sleep)
-        env.render()
-        # action -> leer del archivo
-        #action = bestNeuralNets[i].getOutput(observation)
-        # time.sleep(10000000)
-        #print(action)
-
-        # [1:-2] Remove the first character of the line '[' and -2 removes the last two ']' and '\n'
-        action = bestNeuralNets[step]
-        print (action)
-        
-        #exit()
-
-        #print(float(action[0]))
-        #observation = float(action[0])
-        #reward = float(action[1])
-        #done = float(action[2])
-        #info = float(action[3])
-        #bestNeuralNets[step] = string[1:-1]
-#        print(bestNeuralNets[step])
-        #print(action )
-        #exit()
-
-        observation, reward, done, info = env.step(action)
-
-        totalReward += reward
-        if done:
-            observation = env.reset()
-            break
-            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-
-
-def recordBestBots(bestNeuralNets, env):
-    #sys.stdout = open('pruebalol', 'w+')
-    env = wrappers.Monitor(env, './videos', force='True')
-    #print("\n Recording Best Bots ")
-    #print("---------------------")
-    #env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
+def replayBestBots(bestNeuralNets, env):
     observation = env.reset()
     for i in range(len(bestNeuralNets)):
         totalReward = 0
         for step in range(MAX_STEPS):
-            #env.render()
-            
-            # action -> guardar a un archivo
+            env.render() #####
             action = bestNeuralNets[i].getOutput(observation)
-            #print action >> fd
-            
-            print (action)
-
-
             observation, reward, done, info = env.step(action)
             totalReward += reward
             if done:
                 observation = env.reset()
                 break
-        #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    #env.monitor.close()
-    #print(bestNeuralNets)
+    return None
+
+
+def recordBestBots(bestNeuralNets, env):
+    env = wrappers.Monitor(env, './videos', force='True')  #####
+    observation = env.reset()
+    for i in range(len(bestNeuralNets)):
+        totalReward = 0
+        for step in range(MAX_STEPS):
+            action = bestNeuralNets[i].getOutput(observation)
+            observation, reward, done, info = env.step(action)
+            totalReward += reward
+            if done:
+                observation = env.reset()
+                break
+    return None
 
 
 
@@ -1107,10 +1089,16 @@ if __name__=="__main__":
     #bestNeuralNets[0].getOutput(env.reset())
 
 
-    #recordBestBots(bestNeuralNets, env)
-    #exit()
+    file_name = "test.pipi"
 
+    ##
+    ## THIS IS TO SAVE THE SHITTT
+    ##
+    # pickle.dump(bestNeuralNets, open(file_name, "wb"))
+    # recordBestBots(bestNeuralNets, env)
 
-    #uploadSimulation()
-
-    replayBestBots(max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
+    ##
+    ## THIS IS TO LOAD
+    ##
+    bestNeuralNets = pickle.load(open(file_name, "rb"))
+    replayBestBots(bestNeuralNets, env)
