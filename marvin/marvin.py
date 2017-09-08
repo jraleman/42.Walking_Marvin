@@ -86,63 +86,26 @@ POPULATION_COUNT = 2
 #
 ################################################################################
 
+def global_values(flg):
+    """
+    Change global variables values depending on the flags given.
+    """
 
-def flagWalk(bestNeuralNets, steps, sleep):
-    print ("Load flag works!")
-    # choice = input("Do you want to watch the replay ?[Y/N] : ")
-    # if choice=='Y' or choice=='y':
-    for i in range(len(bestNeuralNets)):
-        #if bestNeuralNets[i] == None:
-            #return
-        if (i + 1) % steps == 0:
-            observation = env.reset()
-            totalReward = 0
-            for step in range(MAX_STEPS):
-                env.render()
-                time.sleep(sleep)
-                action = bestNeuralNets[i].getOutput(observation)
-                observation, reward, done, info = env.step(action)
-                totalReward += reward
-                if done:
-                    observation = env.reset()
-                    break
-            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+    if flg.getFlagName() != None:
+        GAME_NAME = flg.getFlagName()
+    if flg.getFlagMove() != 0:
+        MAX_STEPS = flg.getFlagMove()
+    if flg.getFlagGen() != 0:
+        MAX_GENERATIONS = flg.getFlagGen()
+    if flg.getFlagPop() != 0:
+        POPULATION_COUNT = flg.getFlagPop()
+    if flg.getFlagRate() != 0.0:
+        MUTATION_RATE = flg.getFlagRate()
     return None
-
-def flagVideo(bestNeuralNets, path, env):
-    print ("Video flag works!")
-    print ("Path is : " + str(self.flags['path']))
-    env = wrappers.Monitor(env, path, force='True')
-    #print("\n Recording Best Bots ")
-    #print("---------------------")
-    env = gym.wrappers.Monitor(env, 'vids/'+GAME)
-    observation = env.reset()
-    for i in range(len(bestNeuralNets)):
-        #if bestNeuralNets[i] == None:
-            #return
-        totalReward = 0
-        for step in range(MAX_STEPS):
-            env.render()
-            action = bestNeuralNets[i].getOutput(observation)
-            observation, reward, done, info = env.step(action)
-            totalReward += reward
-            if done:
-                observation = env.reset()
-                break
-        #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    env.monitor.close()
-    return None
-
-################################################################################
-# Log flag
-################################################################################
-
-import sys
-import datetime
 
 def print_stats(flg, gen, min_fit, avg_fit, max_fit):
     """
-    ...........
+    Prints the generation stats.
     """
 
     if gen == 0 and flg.getFlagLog() == True:
@@ -153,12 +116,14 @@ def print_stats(flg, gen, min_fit, avg_fit, max_fit):
     print("Avg Fitness : %5.0f" % avg_fit)
     print("Max Fitness : %5.0f" % max_fit)
     print("-------------------\n")
+    return None
 
 def main(flg):
     """
     Main entry point of the program.
     """
 
+    global_values(flg)
     gym_ai = OpenAIGym(GAME_NAME)
     gen = Generation()
     pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount())
