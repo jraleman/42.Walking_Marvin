@@ -14,8 +14,9 @@
 # **************************************************************************** #
 
 import os
-import logging
+import sys
 import argparse
+import datetime
 
 from lib.open_ai_gym import OpenAIGym
 
@@ -99,43 +100,11 @@ def parser():
         help='number of steps (movement)',
         required=False)
 
-
-
-
-
     parser.add_argument(
         '--log',
-        action='store',
-        dest='path',
-        help='save weights to a file after running the program',
+        action='store_true',
+        help='save info of the generations to a file',
         required=False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     parser.add_argument(
         '--version',
@@ -149,163 +118,32 @@ class MarvinFlags(object):
     """
     ..........
     """
-    def __init__(self, version):
+    def __init__(self, game_name, version):
+        self.game_name = game_name
         self.flags = parser()
         self.version = version
+
+        self.flag_log = False
+
         return None
 
 
-    # Make this into flags so they can be edited
-    # Save string for GAME
-    # Safe int for MAX_STEPS, MAX_GENERATIONS and POPULATION_COUNT
-    # Safe float for MUTATION_RATE, up to 3 digits of precision
-        # Global variables.
+    def getFlagLog(self):
+        return self.flag_log
 
-
-    def runFlags(self):
-        if self.flags['walk']:
-            self.flagWalk()
-        #elif self.flags['video']:
-        #    self.flagVideo()
-        #elif self.flags['save']:
-        #    self.save()
-        #elif self.flags['load']:
-        #    self.load()
-        #else:
-        #    print ("No arguments given")
-
-    #
-    # def flagWalk(bestNeuralNets, steps, sleep):
-    #     print ("Load flag works!")
-    #     # choice = input("Do you want to watch the replay ?[Y/N] : ")
-    #     # if choice=='Y' or choice=='y':
-    #     for i in range(len(bestNeuralNets)):
-    #         #if bestNeuralNets[i] == None:
-    #             #return
-    #         if (i + 1) % steps == 0:
-    #             observation = env.reset()
-    #             totalReward = 0
-    #             for step in range(MAX_STEPS):
-    #                 env.render()
-    #                 time.sleep(sleep)
-    #                 action = bestNeuralNets[i].getOutput(observation)
-    #                 observation, reward, done, info = env.step(action)
-    #                 totalReward += reward
-    #                 if done:
-    #                     observation = env.reset()
-    #                     break
-    #             #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    #     return None
-    #
-
-
-
-
-
-
-
-
-
-
-################################################################################
-# These flags doesn't depends on anything, must be used with everything
-################################################################################
-
-
-        # MAX_STEPS = 1000
-        # MAX_GENERATIONS = 100
-        # POPULATION_COUNT = 42
-        # MUTATION_RATE = 0.042
-
-
-    def flagName(self, val):
-        self.game_name = val
+    def setFlagLog(self, val):
+        self.flag_log = val
         return None
 
-    def flagGenerations(self, val):
-        self.max_generations = val
-        return None
+    def createLogFile(self):
+        log_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_file = self.game_name + "_" + log_time + ".log"
+        sys.stdout = open(log_file, 'a+')
+        print("===================")
+        print(self.game_name)
+        print(log_time)
+        print("===================\n")
 
-    def flagPopulation(self, val):
-        self.population_count = val
-        return None
-
-    def flagMovement(self):
-        self.max_steps = val
-        return None
-
-    def flagRate(self, val):
-        self.mutation_rate = val
-        return None
-
-
-
-
-
-    def flagLoad(self):
-        print ("Load flag works!")
-        print ("Path is : " + str(self.flags['path']))
-
-    def flagSave(self):
-        print ("Save flag works!")
-        print ("Path is : " + str(self.flags['path']))
-
-    # def flagVideo(bestNeuralNets, path, env):
-    #     print ("Video flag works!")
-    #     print ("Path is : " + str(self.flags['path']))
-    #     env = wrappers.Monitor(env, path, force='True')
-    #     #print("\n Recording Best Bots ")
-    #     #print("---------------------")
-    #     env = gym.wrappers.Monitor(env, 'vids/'+GAME)
-    #     observation = env.reset()
-    #     for i in range(len(bestNeuralNets)):
-    #         #if bestNeuralNets[i] == None:
-    #             #return
-    #         totalReward = 0
-    #         for step in range(MAX_STEPS):
-    #             env.render()
-    #             action = bestNeuralNets[i].getOutput(observation)
-    #             observation, reward, done, info = env.step(action)
-    #             totalReward += reward
-    #             if done:
-    #                 observation = env.reset()
-    #                 break
-    #         #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    #     env.monitor.close()
-    #     return None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def flagLog(self, path):
-        """
-        ...
-        """
-
-        handler = logging.handlers.WatchedFileHandler(
-        os.environ.get("LOGFILE", path))
-        formatter = logging.Formatter(logging.BASIC_FORMAT)
-        logging.handler.setFormatter(formatter)
-        root = logging.getLogger()
-        root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
-        root.addHandler(handler)
-        # Check how to save a array of strings (maybe a dictionary, like json)
-        # to a file, given with the argument path.
+    def initFlags(self):
+        if self.flags['log']:
+            self.setFlagLog(True)
