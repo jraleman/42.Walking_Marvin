@@ -783,52 +783,6 @@ class Population :
         self.population = nextGen
 
 
-
-################################################################################
-# Flags
-################################################################################
-
-
-def replayBestBots(bestNeuralNets, steps, sleep):
-    choice = input("Do you want to watch the replay ?[Y/N] : ")
-    if choice=='Y' or choice=='y':
-        for i in range(len(bestNeuralNets)):
-            if (i+1)%steps == 0 :
-                observation = env.reset()
-                totalReward = 0
-                for step in range(MAX_STEPS):
-                    env.render()
-                    time.sleep(sleep)
-                    action = bestNeuralNets[i].getOutput(observation)
-                    observation, reward, done, info = env.step(action)
-                    totalReward += reward
-                    if done:
-                        observation = env.reset()
-                        break
-                print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-
-
-def recordBestBots(bestNeuralNets, env):
-    env = wrappers.Monitor(env, './videos', force='True')
-    print("\n Recording Best Bots ")
-    print("---------------------")
-    env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
-    observation = env.reset()
-    for i in range(len(bestNeuralNets)):
-        totalReward = 0
-        for step in range(MAX_STEPS):
-            env.render()
-            action = bestNeuralNets[i].getOutput(observation)
-            observation, reward, done, info = env.step(action)
-            totalReward += reward
-            if done:
-                observation = env.reset()
-                break
-        print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    env.monitor.close()
-
-
-
 ################################################################################
 # Utils / General Functions
 ################################################################################
@@ -884,15 +838,119 @@ GAME = 'Marvin-v0'
 MAX_STEPS = 1000
 
 # Generaciones y especies (veces que se repite)
-MAX_GENERATIONS = 30
-POPULATION_COUNT = 1000
+MAX_GENERATIONS = 5
+POPULATION_COUNT = 10
 
 # Random value
-MUTATION_RATE = 0.042
+MUTATION_RATE = 0.01
 
 
 # For debug reasons
 import time
+
+
+
+
+################################################################################
+# Flags
+################################################################################
+
+
+def replayBestBots(steps, sleep):
+    #choice = input("Do you want to watch the replay ?[Y/N] : ")
+    #if choice=='Y' or choice=='y':
+    #print("OK")
+    with open('pruebalol') as f:
+         bestNeuralNets = f.readlines()
+
+    #print(action[1])
+    #exit()
+
+    #for i in range(len(bestNeuralNets)):
+        #if (i+1)%steps == 0 :
+    observation = env.reset()
+    totalReward = 0
+    for step in range(MAX_STEPS):
+        
+        #time.sleep(sleep)
+        env.render()
+        # action -> leer del archivo
+        #action = bestNeuralNets[i].getOutput(observation)
+        # time.sleep(10000000)
+        #print(action)
+
+        # [1:-2] Remove the first character of the line '[' and -2 removes the last two ']' and '\n'
+        action = bestNeuralNets[step]
+        print (action)
+        
+        #exit()
+
+        #print(float(action[0]))
+        #observation = float(action[0])
+        #reward = float(action[1])
+        #done = float(action[2])
+        #info = float(action[3])
+        #bestNeuralNets[step] = string[1:-1]
+#        print(bestNeuralNets[step])
+        #print(action )
+        #exit()
+
+        observation, reward, done, info = env.step(action)
+
+        totalReward += reward
+        if done:
+            observation = env.reset()
+            break
+            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+
+
+def recordBestBots(bestNeuralNets, env):
+    #sys.stdout = open('pruebalol', 'w+')
+    env = wrappers.Monitor(env, './videos', force='True')
+    #print("\n Recording Best Bots ")
+    #print("---------------------")
+    #env = gym.wrappers.Monitor(env, 'Artificial Intelligence/'+GAME, force=True)
+    observation = env.reset()
+    for i in range(len(bestNeuralNets)):
+        totalReward = 0
+        for step in range(MAX_STEPS):
+            #env.render()
+            
+            # action -> guardar a un archivo
+            action = bestNeuralNets[i].getOutput(observation)
+            #print action >> fd
+            
+            print (action)
+
+
+            observation, reward, done, info = env.step(action)
+            totalReward += reward
+            if done:
+                observation = env.reset()
+                break
+        #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+    #env.monitor.close()
+    #print(bestNeuralNets)
+
+
+
+
+def save_progress(name, obs, rew, info):
+    np.savez(
+    name,
+    observation=obs,
+    reward=rew,
+    info=info)
+    return None
+
+def load_progress(path):
+    fd = np.load(path)
+    observation = fd['observation']
+    reward = fd['reward']
+    #done = z1['terminado']
+    info = fd['info']
+    return fd
+
 
 if __name__=="__main__":
     # Heurisic: suboptimal, have no notion of balance.
@@ -956,7 +1014,7 @@ if __name__=="__main__":
 
             # Steps ->
             for step in range(MAX_STEPS):
-                env.render()
+                #env.render()
                 action = nn.getOutput(observation)
                 observation, reward, done, info = env.step(action)
 
@@ -965,27 +1023,40 @@ if __name__=="__main__":
                 # print ("Done   : " + done)
                 # print ("Info   : " + info)
                 # f=open('prueba.txt','w')
-                np.savez('prueba',
-                    observasiones=observation, recompensa=reward,
-                    terminado=done, informacion=info)
-                print ('\n\n\nOriginal:\n\n\n')
-                print (observation)
-                print (reward)
-                print (done)
-                print (info)
-                z1 = np.load('prueba.npz')
-                observation = z1['observasiones']
-                reward = z1['recompensa']
-                done = z1['terminado']
-                info = z1['informacion']
-                print ('\n\n\n\nRestore:\n\n\n')
-                # print (z2)
-                print (observation)
-                print (reward)
-                print (done)
-                print (info)
 
-                exit(0)
+
+
+                #save_progress('progress', observation, reward, info)
+                # np.savez('prueba',
+                #     observasiones=observation, recompensa=reward,
+                #     terminado=done, informacion=info)
+
+
+
+
+                # print ('\n\n\nOriginal:\n\n\n')
+                # print (observation)
+                # print (reward)
+                # print (done)
+                # print (info)
+
+
+                # load_progress('test.npz', 'observation', 'reward', 'info')
+
+
+                # z1 = np.load('test.npz')
+                # observation = z1['observasiones']
+                # reward = z1['recompensa']
+                # done = z1['terminado']
+                # info = z1['informacion']
+                # print ('\n\n\n\nRestore:\n\n\n')
+                # # print (z2)
+                # print (observation)
+                # print (reward)
+                # print (done)
+                # print (info)
+
+                # exit(0)
 
 
                 # print ("\nObservation : ")
@@ -1016,17 +1087,30 @@ if __name__=="__main__":
             genAvgFit += nn.fitness
             if nn.fitness > maxFit :
                 maxFit = nn.fitness
-                maxNeuralNet = copy.deepcopy(nn);
+                maxNeuralNet = copy.deepcopy(nn)
+                print(nn)
 
         bestNeuralNets.append(maxNeuralNet)
         genAvgFit/=pop.popCount
-        print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
+
+
+        #bestNeuralNets.getOutput(observation)
+        #exit(0)
+
+
+        #print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen+1, minFit, genAvgFit, maxFit) )
         pop.createNewGeneration(maxNeuralNet)
         #env.render()
         #if done: break
 
-    recordBestBots(bestNeuralNets, env)
+        #print(maxNeuralNet)
+    #bestNeuralNets[0].getOutput(env.reset())
+
+
+    #recordBestBots(bestNeuralNets, env)
+    #exit()
+
 
     #uploadSimulation()
 
-    #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
+    replayBestBots(max(1, int(math.ceil(MAX_GENERATIONS/10.0))), 0.0625)
