@@ -124,9 +124,10 @@ def main(flg):
     """
 
     global_values(flg)
-    gym_ai = OpenAIGym(GAME_NAME)
+    ai_gym = OpenAIGym(GAME_NAME)
     gen = Generation()
-    pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount())
+    pop = Population(POPULATION_COUNT, MUTATION_RATE, ai_gym.getNodeCount())
+    net = NeuralNet(ai_gym.getNodeCount())
     best_neural_nets = gen.getBestNeuralNets()
 
     # Loop for each generation
@@ -138,12 +139,12 @@ def main(flg):
         # Loop for each species in the generation
         for nn in pop.population:
             total_reward = 0
-            observation = gym_ai.getObservation()
+            observation = ai_gym.getObservation()
             # Loop for every step taken by Marvin
             for step in range(MAX_STEPS):
-                gym_ai.getRender()
-                gym_ai.setAction(nn.getOutput(observation))
-                observation, reward, done, info = gym_ai.getAction()
+                ai_gym.getRender()
+                ai_gym.setAction(nn.getOutput(observation))
+                observation, reward, done, info = ai_gym.getAction()
                 total_reward += reward
                 if done:
                     break
@@ -160,7 +161,7 @@ def main(flg):
         print_stats(flg, gen, min_fit, avg_fit, max_fit)
 
     # Records and replayes the best bots
-    #recordBestBots(best_neural_nets, gym_ai.getEnv())
+    #recordBestBots(best_neural_nets, ai_gym.getEnv())
     #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
 
 if __name__ == "__main__":

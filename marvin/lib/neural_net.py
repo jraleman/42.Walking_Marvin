@@ -16,50 +16,91 @@
 from __future__ import print_function
 import numpy as np
 
-class NeuralNet :
+class NeuralNet(object):
     """
     Class ...
     """
     def __init__(self, nodeCount):
+        self.biases = []
+        self.weights = []
         self.fitness = 0.0
         self.nodeCount = nodeCount
-        self.weights = []
-        self.biases = []
         for i in range(len(nodeCount) - 1):
-            self.weights.append( np.random.uniform(low=-1, high=1, size=(nodeCount[i], nodeCount[i+1])).tolist() )
-            self.biases.append( np.random.uniform(low=-1, high=1, size=(nodeCount[i+1])).tolist())
-
-    def getOutput(self, input):
-        output = input
-        for i in range(len(self.nodeCount)-1):
-            output = np.reshape(np.dot(output, self.weights[i]) + self.biases[i], (self.nodeCount[i+1]))
-        return output
+            self.weights.append(np.random.uniform(low = -1, high = 1, \
+                size = (nodeCount[i], nodeCount[i + 1])).tolist())
+            self.biases.append(np.random.uniform(low = -1, high = 1, \
+                size = (nodeCount[i + 1])).tolist())
+        return None
 
     def sigmoid(x):
         """
         Type of activation function for artifical neurons.
         """
+
         return 1.0/(1.0 + np.exp(-x))
 
-    def printWeightsandBiases(self):
-        print("--------------------------------")
-        print("Weights :\n[", end="")
+    def getOutput(self, input):
+        """
+        .........
+        """
+        output = input
+        for i in range(len(self.nodeCount)-1):
+            output = np.reshape(np.dot(output, self.weights[i]) \
+                + self.biases[i], (self.nodeCount[i + 1]))
+        return output
+
+    def printWeights(self):
+        """
+        .........
+        """
+
+        print("Weights :\n[")
         for i in range(len(self.weights)):
-            print("\n [ ", end="")
+            print("\n [ ")
             for j in range(len(self.weights[i])):
-                if j!=0:
-                    print("\n   ", end="")
-                print("[", end="")
+                if j != 0:
+                    print("\n   ")
+                print("[")
                 for k in range(len(self.weights[i][j])):
-                    print(" %5.2f," % (self.weights[i][j][k]), end="")
-                print("\b],", end="")
+                    print(" %5.2f," % (self.weights[i][j][k]))
+                print("\b],")
             print("\b ],")
         print("\n]")
+        return None
 
-        print("\nBiases :\n[", end="")
+    def printBiases(self):
+        """
+        .........
+        """
+
+        print("\nBiases :\n[")
         for i in range(len(self.biases)):
-            print("\n [ ", end="")
+            print("\n [ ")
             for j in range(len(self.biases[i])):
-                    print(" %5.2f," % (self.biases[i][j]), end="")
-            print("\b],", end="")
-        print("\b \n]\n--------------------------------\n")
+                print(" %5.2f," % (self.biases[i][j]))
+            print("\b],")
+        print("\b \n]")
+        return None
+
+    # def printWeightsandBiases(self):
+    #     # print("--------------------------------")
+    #     # print("Weights :\n[", end="")
+    #     # for i in range(len(self.weights)):
+    #     #     print("\n [ ", end="")
+    #     #     for j in range(len(self.weights[i])):
+    #     #         if j!=0:
+    #     #             print("\n   ", end="")
+    #     #         print("[", end="")
+    #     #         for k in range(len(self.weights[i][j])):
+    #     #             print(" %5.2f," % (self.weights[i][j][k]), end="")
+    #     #         print("\b],", end="")
+    #     #     print("\b ],")
+    #     # print("\n]")
+    #
+    #     # print("\nBiases :\n[", end="")
+    #     # for i in range(len(self.biases)):
+    #     #     print("\n [ ", end="")
+    #     #     for j in range(len(self.biases[i])):
+    #     #             print(" %5.2f," % (self.biases[i][j]), end="")
+    #     #     print("\b],", end="")
+    #     # print("\b \n]\n--------------------------------\n")
