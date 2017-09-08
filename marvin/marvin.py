@@ -43,28 +43,24 @@ from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
 GAME_NAME = 'Marvin-v0'
+MAX_STEPS = 1000
+MAX_GENERATIONS = 100
+POPULATION_COUNT = 1000
+MUTATION_RATE = 0.042
 
 def main(flg):
     """
     Main entry point of the program.
     """
 
-    # OpenAIGym, Generation, and Popuation class and method declarations
+    # OpenAIGym, Generation, and Popuation class and method declarations.
     gym_ai = OpenAIGym(GAME_NAME)
-    max_steps = 1000
-    max_generations = 100
-    population_count = 1000
-    mutation_rate = 0.042
-    node_count = gym_ai.getNodeCount()
-    # Generation class declaration
     gen = Generation()
-    total_reward = gen.getTotalReward()
+    pop = Population(POPULATION_COUNT, MUTATION_RATE, gym_ai.getNodeCount())
     best_neural_nets = gen.getBestNeuralNets()
-    # Population class declaration
-    pop = Population(population_count, mutation_rate, node_count)
 
     # Loop for each generation
-    for gen in range(max_generations):
+    for gen in range(MAX_GENERATIONS):
         avg_fit = 0.0
         min_fit =  1000000
         max_fit = -1000000
@@ -74,7 +70,7 @@ def main(flg):
             total_reward = 0
             observation = gym_ai.getObservation()
             # Loop for every step taken by Marvin
-            for step in range(max_steps):
+            for step in range(MAX_STEPS):
                 #gym_ai.getRender()
                 gym_ai.setAction(nn.getOutput(observation))
                 observation, reward, done, info = gym_ai.getAction()
@@ -95,8 +91,8 @@ def main(flg):
         print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen + 1, min_fit, avg_fit, max_fit))
 
     # Records and replayes the best bots
-    #recordBestBots(best_neural_nets, env)
-    #replayBestBots(bestNeuralNets, max(1, int(math.ceil(max_generations / 10.0))), 0.0625)
+    #recordBestBots(best_neural_nets, gym_ai.getEnv())
+    #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
 
 if __name__ == "__main__":
     """
