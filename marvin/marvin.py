@@ -84,8 +84,7 @@ MUTATION_RATE = 0.042
 #
 ################################################################################
 
-
-def replayBestBots(bestNeuralNets, steps, sleep):
+def loadWeights(bestNeuralNets, steps, sleep):
 
     # choice = input("Do you want to watch the replay ?[Y/N] : ")
     # if choice=='Y' or choice=='y':
@@ -110,7 +109,7 @@ def replayBestBots(bestNeuralNets, steps, sleep):
 
 import gym
 
-def recordBestBots(bestNeuralNets, path, env):
+def saveWeights(bestNeuralNets, path, ai_gym):
 
     # env = wrappers.Monitor(env, path, force='True')
     # #print("\n Recording Best Bots ")
@@ -229,16 +228,16 @@ def main(flg):
             avg_fit += nn.fitness
             if  nn.fitness > max_fit:
                 max_fit = nn.fitness
-                max_neural_net = copy.deepcopy(nn);
+                max_neural_net = copy.deepcopy(nn)
+            #print_stats(flg, gen, min_fit, avg_fit, max_fit)
         best_neural_nets.append(max_neural_net)
         avg_fit /= pop.getPopulationCount()
         pop.createNewGeneration(max_neural_net)
-
         print_stats(flg, gen, min_fit, avg_fit, max_fit)
 
     # Records and replayes the best bots
-    #recordBestBots(best_neural_nets, 'videos/', ai_gym.getEnv())
-    #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
+    #saveWeights(best_neural_nets, 'videos/', ai_gym)
+    #loadWeights(best_neural_nets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
 
 if __name__ == "__main__":
     """

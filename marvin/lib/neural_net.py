@@ -81,26 +81,3 @@ class NeuralNet(object):
             print("\b],")
         print("\b \n]")
         return None
-
-    # def printWeightsandBiases(self):
-    #     # print("--------------------------------")
-    #     # print("Weights :\n[", end="")
-    #     # for i in range(len(self.weights)):
-    #     #     print("\n [ ", end="")
-    #     #     for j in range(len(self.weights[i])):
-    #     #         if j!=0:
-    #     #             print("\n   ", end="")
-    #     #         print("[", end="")
-    #     #         for k in range(len(self.weights[i][j])):
-    #     #             print(" %5.2f," % (self.weights[i][j][k]), end="")
-    #     #         print("\b],", end="")
-    #     #     print("\b ],")
-    #     # print("\n]")
-    #
-    #     # print("\nBiases :\n[", end="")
-    #     # for i in range(len(self.biases)):
-    #     #     print("\n [ ", end="")
-    #     #     for j in range(len(self.biases[i])):
-    #     #             print(" %5.2f," % (self.biases[i][j]), end="")
-    #     #     print("\b],", end="")
-    #     # print("\b \n]\n--------------------------------\n")
