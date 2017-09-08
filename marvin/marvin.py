@@ -44,31 +44,22 @@ from lib.utilities import map_range, normalize_array, scale_array, debug_object
 # Global variables.
 GAME_NAME = 'Marvin-v0'
 
-
-
-
-# Debugging functions, remove them before turning in the project!!!
-def print_stats():
-    print("Here is when the log is printed to the stdout")
-
 def main(flg):
     """
     Main entry point of the program.
     """
 
-    # OpenAIGym class and method declarations
+    # OpenAIGym, Generation, and Popuation class and method declarations
     gym_ai = OpenAIGym(GAME_NAME)
     max_steps = 1000
     max_generations = 100
     population_count = 1000
     mutation_rate = 0.042
     node_count = gym_ai.getNodeCount()
-
     # Generation class declaration
     gen = Generation()
     total_reward = gen.getTotalReward()
     best_neural_nets = gen.getBestNeuralNets()
-
     # Population class declaration
     pop = Population(population_count, mutation_rate, node_count)
 
@@ -93,15 +84,15 @@ def main(flg):
             nn.fitness = total_reward
             min_fit = min(min_fit, nn.fitness)
             avg_fit += nn.fitness
-            if nn.fitness > max_fit:
+            if  nn.fitness > max_fit:
                 max_fit = nn.fitness
                 max_neural_net = copy.deepcopy(nn);
         best_neural_nets.append(max_neural_net)
         avg_fit /= pop.getPopulationCount()
+        pop.createNewGeneration(max_neural_net)
+
 
         print("Generation : %3d  |  Min : %5.0f  |  Avg : %5.0f  |  Max : %5.0f  " % (gen + 1, min_fit, avg_fit, max_fit))
-
-        pop.createNewGeneration(max_neural_net)
 
     # Records and replayes the best bots
     #recordBestBots(best_neural_nets, env)
@@ -109,7 +100,7 @@ def main(flg):
 
 if __name__ == "__main__":
     """
-    This is executed when run from the command line
+    This is executed when run from the command line.
     """
 
     flg = MarvinFlags(__version__)
