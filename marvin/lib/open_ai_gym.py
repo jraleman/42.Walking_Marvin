@@ -25,7 +25,7 @@ class OpenAIGym(object):
         self.max_generations = 100
         self.population_count = 42
         self.mutation_rate = 0.042
-        self.env = gym.make(self.game_name)
+        self.env = gym.make(game)
         self.render = self.env.render()
         self.observation = self.env.reset()
         self.in_dimen = self.env.observation_space.shape[0]

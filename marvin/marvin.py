@@ -49,14 +49,12 @@ MAX_GENERATIONS = 100
 POPULATION_COUNT = 420
 MUTATION_RATE = 0.042
 
-# Debug reasons
-MAX_STEPS = 10
-MAX_GENERATIONS = 5
-POPULATION_COUNT = 2
-
 ################################################################################
 # Save and load checkpoints
 ################################################################################
+
+# This might help"
+# https://github.com/alirezamika/bipedal-es
 
 # import os
 # import torch
@@ -86,10 +84,83 @@ POPULATION_COUNT = 2
 #
 ################################################################################
 
+
+def replayBestBots(bestNeuralNets, steps, sleep):
+
+    # choice = input("Do you want to watch the replay ?[Y/N] : ")
+    # if choice=='Y' or choice=='y':
+    for i in range(len(bestNeuralNets)):
+        #if bestNeuralNets[i] == None:
+            #return
+        if (i + 1) % steps == 0:
+            observation = env.reset()
+            totalReward = 0
+            for step in range(MAX_STEPS):
+                env.render()
+                time.sleep(sleep)
+                action = bestNeuralNets[i].getOutput(observation)
+                observation, reward, done, info = env.step(action)
+                totalReward += reward
+                if done:
+                    observation = env.reset()
+                    break
+            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+    return None
+
+
+import gym
+
+def recordBestBots(bestNeuralNets, path, env):
+
+    # env = wrappers.Monitor(env, path, force='True')
+    # #print("\n Recording Best Bots ")
+    # #print("---------------------")
+    # #env = gym.wrappers.Monitor(env, 'vids/'+GAME)
+    # observation = env.reset()
+    # for i in range(len(bestNeuralNets)):
+    #     #if bestNeuralNets[i] == None:
+    #         #return
+    #     totalReward = 0
+    #     for step in range(MAX_STEPS):
+    #         env.render()
+    #         action = bestNeuralNets[i].getOutput(observation)
+    #         observation, reward, done, info = env.step(action)
+    #         totalReward += reward
+    #         if done:
+    #             observation = env.reset()
+    #             break
+    #     #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+    # env.monitor.close()
+    # return None
+
+    print("\n Recording Best Bots ")
+    print("---------------------")
+    env.monitor.start('rec/'+GAME_NAME, force=True)
+    observation = env.reset()
+    for i in range(len(bestNeuralNets)):
+        totalReward = 0
+        for step in range(MAX_STEPS):
+            env.render()
+            action = bestNeuralNets[i].getOutput(observation)
+            observation, reward, done, info = env.step(action)
+            totalReward += reward
+            if done:
+                observation = env.reset()
+                break
+        print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
+    env.monitor.close()
+
+################################################################################
+
 def global_values(flg):
     """
     Change global variables values depending on the flags given.
     """
+    global GAME_NAME
+    global MAX_STEPS
+    global MAX_GENERATIONS
+    global POPULATION_COUNT
+    global MUTATION_RATE
 
     if flg.getFlagName() != None:
         GAME_NAME = flg.getFlagName()
@@ -117,6 +188,11 @@ def print_stats(flg, gen, min_fit, avg_fit, max_fit):
     print("Max Fitness : %5.0f" % max_fit)
     print("-------------------\n")
     return None
+
+# Debug reasons
+MAX_STEPS = 10
+MAX_GENERATIONS = 5
+POPULATION_COUNT = 2
 
 def main(flg):
     """
@@ -161,7 +237,7 @@ def main(flg):
         print_stats(flg, gen, min_fit, avg_fit, max_fit)
 
     # Records and replayes the best bots
-    #recordBestBots(best_neural_nets, ai_gym.getEnv())
+    #recordBestBots(best_neural_nets, 'videos/', ai_gym.getEnv())
     #replayBestBots(bestNeuralNets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
 
 if __name__ == "__main__":
