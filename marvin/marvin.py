@@ -28,6 +28,7 @@ __license__ = "MIT"
 # Gym AI dependencies
 import gym
 import copy
+import pickle
 import numpy as np
 from lib.enviroment import Marvin
 from lib.open_ai_gym import OpenAIGym
@@ -43,7 +44,7 @@ from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
 GAME_NAME = 'Marvin-v0'
-FILE_PATH = 'checkpoints/marvin-state'
+FILE_NAME = 'weights.plk'
 MAX_STEPS = 1000
 MAX_GENERATIONS = 100
 POPULATION_COUNT = 420
@@ -53,101 +54,44 @@ MUTATION_RATE = 0.042
 # Save and load checkpoints
 ################################################################################
 
-# This might help"
-# https://github.com/alirezamika/bipedal-es
-
-# import os
-# import torch
-#
-# def save(net, optimizer, epoch):
-#     state = {
-#         'state_dict': net.state_dict(),
-#         'optimizer': optimizer.state_dict(),
-#         'epoch': epoch,
-#     }
-#     print ("Saving checkpoint to file '{}'" . format(FILE_PATH))
-#     torch.save(state, FILE_PATH)
-#
-# def load():
-#     #net = Net()
-#     net = 0
-#     optimizer = optim.Adam(net.parameters(), lr=MUTATION_RATE)
-#     epoch = 0
-#
-#     if os.path.isfile(FILE_PATH):
-#         print ("Loading checkpoint from file '{}'" . format(FILE_PATH))
-#         checkpoint = torch.load(FILE_PATH)
-#         epoch = checkpoint['epoch']
-#         net.load_state_dict(checkpoint['state_dict'])
-#         optimizer.load_state_dict(checkpoint['optimizer'])
-#     return net, optimizer, epoch
-#
-################################################################################
-
-def loadWeights(bestNeuralNets, steps, sleep):
-
-    # choice = input("Do you want to watch the replay ?[Y/N] : ")
-    # if choice=='Y' or choice=='y':
-    for i in range(len(bestNeuralNets)):
-        #if bestNeuralNets[i] == None:
-            #return
-        if (i + 1) % steps == 0:
-            observation = env.reset()
-            totalReward = 0
-            for step in range(MAX_STEPS):
-                env.render()
-                time.sleep(sleep)
-                action = bestNeuralNets[i].getOutput(observation)
-                observation, reward, done, info = env.step(action)
-                totalReward += reward
-                if done:
-                    observation = env.reset()
-                    break
-            #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    return None
-
-
-import gym
-
-def saveWeights(bestNeuralNets, path, ai_gym):
-
-    # env = wrappers.Monitor(env, path, force='True')
-    # #print("\n Recording Best Bots ")
-    # #print("---------------------")
-    # #env = gym.wrappers.Monitor(env, 'vids/'+GAME)
-    # observation = env.reset()
-    # for i in range(len(bestNeuralNets)):
-    #     #if bestNeuralNets[i] == None:
-    #         #return
-    #     totalReward = 0
-    #     for step in range(MAX_STEPS):
-    #         env.render()
-    #         action = bestNeuralNets[i].getOutput(observation)
-    #         observation, reward, done, info = env.step(action)
-    #         totalReward += reward
-    #         if done:
-    #             observation = env.reset()
-    #             break
-    #     #print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    # env.monitor.close()
-    # return None
-
-    print("\n Recording Best Bots ")
-    print("---------------------")
-    env.monitor.start('rec/'+GAME_NAME, force=True)
-    observation = env.reset()
+def loadWeights(bestNeuralNets, ai_gym):
+    """
+    .........
+    """
+    observation = ai_gym.getObservation()
     for i in range(len(bestNeuralNets)):
         totalReward = 0
         for step in range(MAX_STEPS):
-            env.render()
+            ai_gym.getRender()
             action = bestNeuralNets[i].getOutput(observation)
-            observation, reward, done, info = env.step(action)
+            ai_gym.setAction(action)
+            observation, reward, done, info = ai_gym.getAction()
             totalReward += reward
             if done:
-                observation = env.reset()
+                observation = ai_gym.getObservation()
                 break
-        print("Generation %3d | Expected Fitness of %4d | Actual Fitness = %4d" % (i+1, bestNeuralNets[i].fitness, totalReward))
-    env.monitor.close()
+    return None
+
+
+
+def saveWeights(bestNeuralNets, ai_gym):
+    """
+    .........
+    """
+    ai_gym.videoMonitor()
+    #env = wrappers.Monitor(env, './videos', force='True')
+    observation = ai_gym.getObservation()
+    for i in range(len(bestNeuralNets)):
+        totalReward = 0
+        for step in range(MAX_STEPS):
+            action = bestNeuralNets[i].getOutput(observation)
+            ai_gym.setAction(action)
+            observation, reward, done, info = ai_gym.getAction()
+            totalReward += reward
+            if done:
+                observation = ai_gym.getObservation()
+                break
+    return None
 
 ################################################################################
 
@@ -189,7 +133,7 @@ def print_stats(flg, gen, min_fit, avg_fit, max_fit):
     return None
 
 # Debug reasons
-MAX_STEPS = 10
+MAX_STEPS = 1000
 MAX_GENERATIONS = 5
 POPULATION_COUNT = 2
 
@@ -198,12 +142,19 @@ def main(flg):
     Main entry point of the program.
     """
 
-    global_values(flg)
+    if flg != None:
+        global_values(flg)
     ai_gym = OpenAIGym(GAME_NAME)
     gen = Generation()
     pop = Population(POPULATION_COUNT, MUTATION_RATE, ai_gym.getNodeCount())
     net = NeuralNet(ai_gym.getNodeCount())
     best_neural_nets = gen.getBestNeuralNets()
+
+    # Loads the weights and exit the program.
+    if flg.getFlagLoad() == "if file exists":
+        best_neural_nets = pickle.load(open(FILE_NAME, "rb"))
+        loadWeights(best_neural_nets, ai_gym)
+        exit()
 
     # Loop for each generation
     for gen in range(MAX_GENERATIONS):
@@ -217,7 +168,8 @@ def main(flg):
             observation = ai_gym.getObservation()
             # Loop for every step taken by Marvin
             for step in range(MAX_STEPS):
-                ai_gym.getRender()
+                if flg.getFlagWalk() == True:
+                    ai_gym.getRender()
                 ai_gym.setAction(nn.getOutput(observation))
                 observation, reward, done, info = ai_gym.getAction()
                 total_reward += reward
@@ -235,9 +187,11 @@ def main(flg):
         pop.createNewGeneration(max_neural_net)
         print_stats(flg, gen, min_fit, avg_fit, max_fit)
 
-    # Records and replayes the best bots
-    #saveWeights(best_neural_nets, 'videos/', ai_gym)
-    #loadWeights(best_neural_nets, max(1, int(math.ceil(MAX_GENERATIONS / 10.0))), 0.0625)
+    ##
+    ## THIS IS TO SAVE THE SHITTT
+    ##
+    pickle.dump(best_neural_nets, open(FILE_NAME, "wb"))
+    saveWeights(best_neural_nets, ai_gym)
 
 if __name__ == "__main__":
     """

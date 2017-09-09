@@ -14,6 +14,7 @@
 # **************************************************************************** #
 
 import gym
+from gym import wrappers
 
 class OpenAIGym(object):
     """
@@ -26,8 +27,7 @@ class OpenAIGym(object):
         self.population_count = 42
         self.mutation_rate = 0.042
         self.env = gym.make(game)
-        self.render = self.env.render()
-        self.observation = self.env.reset()
+        self.video = './videos'
         self.in_dimen = self.env.observation_space.shape[0]
         self.out_dimen = self.env.action_space.shape[0]
         self.obs_min = self.env.observation_space.low
@@ -35,11 +35,12 @@ class OpenAIGym(object):
         self.action = None
         self.action_min = self.env.action_space.low
         self.action_max = self.env.action_space.high
-
-        # Why 13, 8 and 13??? lol!
         self.node_count = [self.in_dimen, 13, 8, 13, self.out_dimen]
-
         return None
+
+    def videoMonitor(self):
+        self.env = wrappers.Monitor(self.env, self.video, force='True')
+        return self.env
 
     # Get methods
     def getGameName(self):
@@ -114,4 +115,7 @@ class OpenAIGym(object):
         return None
     def setNodeCount(self, val):
         self.node_count = val
+        return None
+    def setVideo(self, val):
+        self.video = val
         return None
