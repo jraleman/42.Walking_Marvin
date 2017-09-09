@@ -210,6 +210,42 @@ class MarvinFlags(object):
         print("===================\n")
         return None
 
+    def loadWeights(best_neural_nets, steps, ai_gym):
+        """
+        .........
+        """
+        observation = ai_gym.getObservation()
+        for i in range(len(best_neural_nets)):
+            totalReward = 0
+            for step in range(steps):
+                ai_gym.getRender()
+                action = best_neural_nets[i].getOutput(observation)
+                ai_gym.setAction(action)
+                observation, reward, done, info = ai_gym.getAction()
+                totalReward += reward
+                if done:
+                    observation = ai_gym.getObservation()
+                    break
+        return None
+
+    def saveWeights(best_neural_nets, steps, ai_gym):
+        """
+        .........
+        """
+        ai_gym.videoMonitor()
+        observation = ai_gym.getObservation()
+        for i in range(len(best_neural_nets)):
+            totalReward = 0
+            for step in range(steps):
+                action = best_neural_nets[i].getOutput(observation)
+                ai_gym.setAction(action)
+                observation, reward, done, info = ai_gym.getAction()
+                totalReward += reward
+                if done:
+                    observation = ai_gym.getObservation()
+                    break
+        return None
+
     def initFlags(self):
         self.setFlagWalk(self.flags.walk)
         self.setFlagVideo(self.flags.video)

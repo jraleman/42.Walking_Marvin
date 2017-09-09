@@ -50,51 +50,6 @@ MAX_GENERATIONS = 100
 POPULATION_COUNT = 420
 MUTATION_RATE = 0.042
 
-################################################################################
-# Save and load checkpoints
-################################################################################
-
-def loadWeights(bestNeuralNets, ai_gym):
-    """
-    .........
-    """
-    observation = ai_gym.getObservation()
-    for i in range(len(bestNeuralNets)):
-        totalReward = 0
-        for step in range(MAX_STEPS):
-            ai_gym.getRender()
-            action = bestNeuralNets[i].getOutput(observation)
-            ai_gym.setAction(action)
-            observation, reward, done, info = ai_gym.getAction()
-            totalReward += reward
-            if done:
-                observation = ai_gym.getObservation()
-                break
-    return None
-
-
-
-def saveWeights(bestNeuralNets, ai_gym):
-    """
-    .........
-    """
-    ai_gym.videoMonitor()
-    #env = wrappers.Monitor(env, './videos', force='True')
-    observation = ai_gym.getObservation()
-    for i in range(len(bestNeuralNets)):
-        totalReward = 0
-        for step in range(MAX_STEPS):
-            action = bestNeuralNets[i].getOutput(observation)
-            ai_gym.setAction(action)
-            observation, reward, done, info = ai_gym.getAction()
-            totalReward += reward
-            if done:
-                observation = ai_gym.getObservation()
-                break
-    return None
-
-################################################################################
-
 def global_values(flg):
     """
     Change global variables values depending on the flags given.
@@ -151,9 +106,9 @@ def main(flg):
     best_neural_nets = gen.getBestNeuralNets()
 
     # Loads the weights and exit the program.
-    if flg.getFlagLoad() == "if file exists":
+    if flg.getFlagLoad() != None:
         best_neural_nets = pickle.load(open(FILE_NAME, "rb"))
-        loadWeights(best_neural_nets, ai_gym)
+        loadWeights(best_neural_nets, steps, ai_gym)
         exit()
 
     # Loop for each generation
@@ -187,11 +142,11 @@ def main(flg):
         pop.createNewGeneration(max_neural_net)
         print_stats(flg, gen, min_fit, avg_fit, max_fit)
 
-    ##
-    ## THIS IS TO SAVE THE SHITTT
-    ##
-    pickle.dump(best_neural_nets, open(FILE_NAME, "wb"))
-    saveWeights(best_neural_nets, ai_gym)
+    if flg.getFlagSave() != None:
+        pickle.dump(best_neural_nets, open(FILE_NAME, "wb"))
+
+    if flg.getFlagVideo() != None:
+        saveWeights(best_neural_nets, steps, ai_gym)
 
 if __name__ == "__main__":
     """
