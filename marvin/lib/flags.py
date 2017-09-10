@@ -113,6 +113,13 @@ def parser():
         required=False)
 
     parser.add_argument(
+        '-q',
+        '--quiet',
+        action='store_true',
+        help='mutation',
+        required=False)
+
+    parser.add_argument(
         '--log',
         action='store_true',
         help='save info of the generations to a file',
@@ -134,6 +141,7 @@ class MarvinFlags(object):
         self.flags = parser()
         self.name = name
         self.version = version
+        self.file_name = None
         self.flag_walk = False
         self.flag_video = False
         self.flag_load = False
@@ -144,6 +152,7 @@ class MarvinFlags(object):
         self.flag_move = 0
         self.flag_rate = 0.0
         self.flag_log = False
+        self.flag_quiet = False
         return None
 
     # Get methods
@@ -167,6 +176,8 @@ class MarvinFlags(object):
         return self.flag_rate
     def getFlagLog(self):
         return self.flag_log
+    def getFlagQuiet(self):
+        return self.flag_quiet
 
     # Set methods
     def setFlagWalk(self, val):
@@ -199,15 +210,8 @@ class MarvinFlags(object):
     def setFlagLog(self, val):
         self.flag_log = val
         return None
-
-    def createLogFile(self):
-        log_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_file = self.name + "_" + log_time + ".log"
-        sys.stdout = open(log_file, 'a+')
-        print("===================")
-        print(self.name)
-        print(log_time)
-        print("===================\n")
+    def setFlagQuiet(self, val):
+        self.flag_quiet = val
         return None
 
     def loadWeights(best_neural_nets, steps, ai_gym):
@@ -246,6 +250,32 @@ class MarvinFlags(object):
                     break
         return None
 
+    def createLogFile(self):
+        log_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_file = self.name + "_" + log_time + ".log"
+        sys.stdout = open(log_file, 'a+')
+        print("===================")
+        print(self.name)
+        print(log_time)
+        print("===================\n")
+        return None
+
+    def saveLog(self, gen, min_fit, avg_fit, max_fit):
+        """
+        Prints the generation stats.
+        """
+
+        if gen == 0:
+            print("Stats will be saved in a log file.")
+            self.createLogFile()
+        print("Generation  : %5d" % (gen + 1))
+        print("Min Fitness : %5.0f" % min_fit)
+        print("Avg Fitness : %5.0f" % avg_fit)
+        print("Max Fitness : %5.0f" % max_fit)
+        print("-------------------\n")
+        return None
+
+
     def initFlags(self):
         self.setFlagWalk(self.flags.walk)
         self.setFlagVideo(self.flags.video)
@@ -257,4 +287,5 @@ class MarvinFlags(object):
         self.setFlagMove(self.flags.movement)
         self.setFlagRate(self.flags.rate)
         self.setFlagLog(self.flags.log)
+        self.setFlagQuiet(self.flags.quiet)
         return None

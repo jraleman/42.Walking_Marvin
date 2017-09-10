@@ -979,6 +979,26 @@ if __name__=="__main__":
     print("Shape :", out_dimen, " | High :", actionMax, " | Low :", actionMin,"\n")
     #env.render()
 
+    file_name = "test.pipi"
+
+    ##
+    ## THIS IS TO SAVE THE SHITTT
+    ##
+    # pickle.dump(bestNeuralNets, open(file_name, "wb"))
+    # recordBestBots(bestNeuralNets, env)
+
+    ##
+    ## THIS IS TO LOAD
+    ##
+
+
+    try:
+        bestNeuralNets = pickle.load(open(file_name, "rb"))
+        replayBestBots(bestNeuralNets, env)
+    except:
+        print ("This is an error message!")
+        return
+
 
 
     # Generations ->
@@ -1087,18 +1107,3 @@ if __name__=="__main__":
 
         #print(maxNeuralNet)
     #bestNeuralNets[0].getOutput(env.reset())
-
-
-    file_name = "test.pipi"
-
-    ##
-    ## THIS IS TO SAVE THE SHITTT
-    ##
-    # pickle.dump(bestNeuralNets, open(file_name, "wb"))
-    # recordBestBots(bestNeuralNets, env)
-
-    ##
-    ## THIS IS TO LOAD
-    ##
-    bestNeuralNets = pickle.load(open(file_name, "rb"))
-    replayBestBots(bestNeuralNets, env)
