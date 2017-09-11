@@ -21,7 +21,7 @@ RES_DIR="resources"
 if [ $(uname -s) = "Darwin" ] ; then
     echo " > Updating / installing python packages..."
     brew update
-    brew install python3.6
+    brew install python
     brew install numpy
     brew install box2d
 fi

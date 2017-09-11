@@ -1,3 +1,2 @@
 gym         # see https://github.com/openai/gym
 argparse    # see https://pypi.python.org/pypi/argparse
-logzero     # see https://github.com/metachris/logzero
