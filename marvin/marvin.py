@@ -32,15 +32,10 @@ import pickle
 import numpy as np
 from lib.enviroment import Marvin
 from lib.open_ai_gym import OpenAIGym
-
-# NeuralNetwork dependencies
 from lib.neural_net import NeuralNet
 from lib.population import Population
 from lib.generation import Generation
-
-# Modules to parse flags, save logs, and aux functions.
 from lib.flags import MarvinFlags
-from lib.utilities import map_range, normalize_array, scale_array, debug_object
 
 # Global variables.
 GAME_NAME = 'Marvin-v0'

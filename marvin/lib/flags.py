@@ -100,7 +100,7 @@ def parser():
         type=float,
         default=0.0,
         metavar='FLOAT',
-        help='mutation rate (recommended values in the range of 0.01)',
+        help='mutation rate (recommended values in the range of decimals)',
         required=False)
 
     parser.add_argument(
