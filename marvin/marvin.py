@@ -82,6 +82,7 @@ def main(flg):
     Main entry point of the program.
     """
 
+    # Init variables.
     if flg != None:
         global_values(flg)
     ai_gym = OpenAIGym(GAME_NAME)
@@ -92,12 +93,12 @@ def main(flg):
 
     # Loads the weights and exit the program.
     if flg.getFlagLoad() != None:
-        #try:
-        best_neural_nets = pickle.load(open(FILE_NAME, "rb"))
-        flg.loadWeights(best_neural_nets, steps, ai_gym)
-        #except:
-        #    print ("Error loading file! Are you sure it exists?")
-        #    exit(-1)
+        try:
+            best_neural_nets = pickle.load(open(FILE_NAME, "rb"))
+            flg.loadWeights(best_neural_nets, steps, ai_gym)
+        except:
+            print ("Error loading file! :(")
+            exit(-1)
 
     # Loop for each generation
     for gen in range(MAX_GENERATIONS):
@@ -105,39 +106,58 @@ def main(flg):
         min_fit =  1000000
         max_fit = -1000000
         max_neural_net = None
+
         # Loop for each species in the generation
         for nn in pop.population:
             total_reward = 0
             observation = ai_gym.getObservation()
+
             # Loop for every step taken by Marvin
             for step in range(MAX_STEPS):
-                if flg.getFlagWalk() == True:
-                    ai_gym.getRender()
+                # if flg.getFlagWalk() == True:
+                #     ai_gym.getRender()
+                if flg.getFlagQuiet() == False:
+                    ai_gym.getRender() # or this???
                 ai_gym.setAction(nn.getOutput(observation))
                 observation, reward, done, info = ai_gym.getAction()
-                if flg.getFlagQuiet() == False:
-                    print ("Step        : %d" % step)
-                    print ("Reward      : %f" % reward)
-                    print ("Total Reward: %f" % total_reward)
-                    print ("Generation  : %d" % gen)
-                    print (observation)
-                    print ("-----\n")
                 total_reward += reward
                 if done:
                     break
+         
+                # Display stats
+                if flg.getFlagQuiet() == False and flg.getFlagWalk() == False:
+                    print ("Step          : %d" % step)
+                    print ("Reward        : %f" % reward)
+                    print ("Mutation Rate : %f" % MUTATION_RATE)
+                    print ("Total Reward  : %f" % total_reward)
+                    print ("Generation    : %d" % gen)
+                    print (observation)
+                    print ("-----\n")
+         
+            # Calculate fitness
             nn.fitness = total_reward
             min_fit = min(min_fit, nn.fitness)
             avg_fit += nn.fitness
-            if  nn.fitness > max_fit:
+
+            # Checks if the fitness is better than the previous best one.
+            if nn.fitness > max_fit:
                 max_fit = nn.fitness
                 max_neural_net = copy.deepcopy(nn)
+       
+        # Saves the best species from a generation, and creates a new generation.
         best_neural_nets.append(max_neural_net)
         avg_fit /= pop.getPopulationCount()
         pop.createNewGeneration(max_neural_net)
+
+        # Saves a more simple but detailed log to a file.
         if flg.getFlagLog == True:
             saveLog(flg, gen, min_fit, avg_fit, max_fit)
+    
+    # Save the dump of the best neural networks.
     if flg.getFlagSave() != None:
         pickle.dump(best_neural_nets, open(FILE_NAME, "wb"))
+
+    # Save videos of the best bots.
     if flg.getFlagVideo() != None:
         flg.saveVideo(best_neural_nets, steps, ai_gym)
 

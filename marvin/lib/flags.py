@@ -29,7 +29,7 @@ def parser():
         description="Python project that uses OpenAI Gym with the environment \
             (provided) Marvin. The goal is to train Marvin to walk, \
             having the training and walking process.",
-        epilog="Go ahead and run some flags")
+        epilog="Go ahead and run some flags :)")
 
     parser.add_argument(
         '-w',
@@ -72,7 +72,7 @@ def parser():
         '--name',
         type=str,
         default=None,
-        metavar='S',
+        metavar='STR',
         help='the name of the game (enviroment)',
         required=False)
 
@@ -81,7 +81,7 @@ def parser():
         '--generation',
         type=int,
         default=0,
-        metavar='N',
+        metavar='INT',
         help='number of max generations',
         required=False)
 
@@ -90,7 +90,7 @@ def parser():
         '--population',
         type=int,
         default=0,
-        metavar='N',
+        metavar='INT',
         help='count of the population between each generation',
         required=False)
 
@@ -99,7 +99,7 @@ def parser():
         '--rate',
         type=float,
         default=0.0,
-        metavar='F',
+        metavar='FLOAT',
         help='mutation rate (recommended values in the range of 0.01)',
         required=False)
 
@@ -108,7 +108,7 @@ def parser():
         '--movement',
         type=int,
         default=0,
-        metavar='N',
+        metavar='INT',
         help='number of steps (movement) between each species',
         required=False)
 
