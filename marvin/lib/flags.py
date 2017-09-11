@@ -41,9 +41,7 @@ def parser():
     parser.add_argument(
         '-v',
         '--video',
-        type=str,
-        default=None,
-        metavar='PATH',
+        action='store_true',
         help='saves videos of the walking proccess of the best species \
         from each generation',
         required=False)\
@@ -233,7 +231,7 @@ class MarvinFlags(object):
                     break
         return None
 
-    def saveVideo(best_neural_nets, steps, ai_gym):
+    def saveVideo(self, best_neural_nets, steps, ai_gym):
         """
         Save a series of video of the best bots.
         """
@@ -257,7 +255,7 @@ class MarvinFlags(object):
         """
         Creates a simple log file, with the time date as its name.
         """
-   
+
         log_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_file = self.name + "_" + log_time + ".log"
         sys.stdout = open(log_file, 'a+')
