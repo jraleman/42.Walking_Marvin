@@ -22,14 +22,14 @@ from lib.open_ai_gym import OpenAIGym
 
 def parser():
     """
-    ..........
+    Flags parser
     """
 
     parser = argparse.ArgumentParser(
         description="Python project that uses OpenAI Gym with the environment \
             (provided) Marvin. The goal is to train Marvin to walk, \
             having the training and walking process.",
-        epilog="Go ahead and run the visualizer! :D")
+        epilog="Go ahead and run some flags")
 
     parser.add_argument(
         '-w',
@@ -82,7 +82,7 @@ def parser():
         type=int,
         default=0,
         metavar='N',
-        help='number of max generations to be ',
+        help='number of max generations',
         required=False)
 
     parser.add_argument(
@@ -91,7 +91,7 @@ def parser():
         type=int,
         default=0,
         metavar='N',
-        help='count',
+        help='count of the population between each generation',
         required=False)
 
     parser.add_argument(
@@ -100,7 +100,7 @@ def parser():
         type=float,
         default=0.0,
         metavar='F',
-        help='mutation',
+        help='mutation rate (recommended values in the range of 0.01)',
         required=False)
 
     parser.add_argument(
@@ -109,20 +109,20 @@ def parser():
         type=int,
         default=0,
         metavar='N',
-        help='number of steps (movement)',
+        help='number of steps (movement) between each species',
         required=False)
 
     parser.add_argument(
         '-q',
         '--quiet',
         action='store_true',
-        help='mutation',
+        help='hide the program\'s log between each episode',
         required=False)
 
     parser.add_argument(
         '--log',
         action='store_true',
-        help='save info of the generations to a file',
+        help='save a log of each generation to a file',
         required=False)
 
     parser.add_argument(
@@ -135,7 +135,7 @@ def parser():
 
 class MarvinFlags(object):
     """
-    ..........
+    Class to setup the arguments given from the command line.
     """
     def __init__(self, name, version):
         self.flags = parser()
@@ -216,8 +216,9 @@ class MarvinFlags(object):
 
     def loadWeights(best_neural_nets, steps, ai_gym):
         """
-        .........
+        Renders the weights and display the best generations.
         """
+
         observation = ai_gym.getObservation()
         for i in range(len(best_neural_nets)):
             totalReward = 0
@@ -232,11 +233,13 @@ class MarvinFlags(object):
                     break
         return None
 
-    def saveWeights(best_neural_nets, steps, ai_gym):
+    def saveVideo(best_neural_nets, steps, ai_gym):
         """
-        .........
+        Save a series of video of the best bots.
         """
-        ai_gym.videoMonitor()
+
+        if self.flag_video == True:
+            ai_gym.videoMonitor()
         observation = ai_gym.getObservation()
         for i in range(len(best_neural_nets)):
             totalReward = 0
@@ -251,6 +254,10 @@ class MarvinFlags(object):
         return None
 
     def createLogFile(self):
+        """
+        Creates a simple log file, with the time date as its name.
+        """
+   
         log_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_file = self.name + "_" + log_time + ".log"
         sys.stdout = open(log_file, 'a+')
@@ -277,6 +284,10 @@ class MarvinFlags(object):
 
 
     def initFlags(self):
+        """
+        Init flags values
+        """
+
         self.setFlagWalk(self.flags.walk)
         self.setFlagVideo(self.flags.video)
         self.setFlagLoad(self.flags.load)

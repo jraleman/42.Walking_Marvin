@@ -18,8 +18,9 @@ import numpy as np
 
 class NeuralNet(object):
     """
-    Class ...
+    Neural network class.
     """
+
     def __init__(self, nodeCount):
         self.biases = []
         self.weights = []
@@ -41,8 +42,9 @@ class NeuralNet(object):
 
     def getOutput(self, input):
         """
-        .........
+        Gets the observation's output.
         """
+
         output = input
         for i in range(len(self.nodeCount)-1):
             output = np.reshape(np.dot(output, self.weights[i]) \
@@ -51,7 +53,7 @@ class NeuralNet(object):
 
     def printWeights(self):
         """
-        .........
+        Prints the weights in a pretty way.
         """
 
         print("Weights :\n[")
@@ -70,7 +72,7 @@ class NeuralNet(object):
 
     def printBiases(self):
         """
-        .........
+        Prints the biases in a cool way.
         """
 
         print("\nBiases :\n[")

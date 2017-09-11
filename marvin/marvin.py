@@ -116,8 +116,12 @@ def main(flg):
                 ai_gym.setAction(nn.getOutput(observation))
                 observation, reward, done, info = ai_gym.getAction()
                 if flg.getFlagQuiet() == False:
-                    print ("Observation : ", observation, \
-                           "Reward      : ", reward, "\n")
+                    print ("Step        : %d" % step)
+                    print ("Reward      : %f" % reward)
+                    print ("Total Reward: %f" % total_reward)
+                    print ("Generation  : %d" % gen)
+                    print (observation)
+                    print ("-----\n")
                 total_reward += reward
                 if done:
                     break
@@ -135,7 +139,7 @@ def main(flg):
     if flg.getFlagSave() != None:
         pickle.dump(best_neural_nets, open(FILE_NAME, "wb"))
     if flg.getFlagVideo() != None:
-        flg.saveWeights(best_neural_nets, steps, ai_gym)
+        flg.saveVideo(best_neural_nets, steps, ai_gym)
 
 if __name__ == "__main__":
     """

@@ -13,12 +13,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-import time
-
 def map_range(value, leftMin, leftMax, rightMin, rightMax):
     """
-    ...
+    Gets the range of a map.
     """
+
     leftSpan = leftMax - leftMin
     rightSpan = rightMax - rightMin
     valueScaled = float(value - leftMin) / float(leftSpan)
@@ -26,8 +25,9 @@ def map_range(value, leftMin, leftMax, rightMin, rightMax):
 
 def normalize_array(aVal, aMin, aMax):
     """
-    ...
+    Normalize arrays.
     """
+
     res = []
     for i in range(len(aVal)):
         res.append(mapRange(aVal[i], aMin[i], aMax[i], -1, 1))
@@ -35,8 +35,9 @@ def normalize_array(aVal, aMin, aMax):
 
 def scale_array(aVal, aMin, aMax):
     """
-    ...
+    Scale arrays.
     """
+
     res = []
     for i in range(len(aVal)):
         res.append(mapRange(aVal[i], -1, 1, aMin[i], aMax[i]))
@@ -44,7 +45,8 @@ def scale_array(aVal, aMin, aMax):
 
 def debug_object(object):
     """
-    ...
+    Print an object and exits the program.
     """
+
     print (object)
     exit(42)

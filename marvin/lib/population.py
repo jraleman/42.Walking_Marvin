@@ -20,22 +20,29 @@ from lib.neural_net import NeuralNet
 
 class Population :
     """
-    Class ...
+    Population class for each episode.
     """
+
     def __init__(self, populationCount, mutationRate, nodeCount):
         self.nodeCount = nodeCount
         self.popCount = populationCount
         self.m_rate = mutationRate
         self.population = [NeuralNet(nodeCount) for i in range(populationCount)]
 
+    # Get methods
     def getPopulationCount(self):
         return self.popCount
 
+    # Set methods
     def setPopulationCount(self, val):
         self.popCount = val
         return None
 
     def createChild(self, nn1, nn2):
+        """
+        Creates a child from a neural network.
+        """
+
         child = NeuralNet(self.nodeCount)
         for i in range(len(child.weights)):
             for j in range(len(child.weights[i])):
@@ -55,6 +62,10 @@ class Population :
         return child
 
     def createNewGeneration(self, bestNN):
+        """
+        Creats a new generation.
+        """
+
         nextGen = []
         self.population.sort(key=lambda x: x.fitness, reverse=True)
         for i in range(self.popCount):
@@ -76,5 +87,5 @@ class Population :
                 print("Sum Array =",fitnessSum)
                 print("Randoms = ", r1, r2)
                 print("Indices = ", i1, i2)
-        self.population[:] # clear the list, idk if we need to use it! Maybe not
+        self.population[:] # Clear the list
         self.population = nextGen
