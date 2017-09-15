@@ -17,9 +17,7 @@ development, we learned how to use neural networks to help Marvin
 get back on his feet, without using any libraries that do the goal of the
 project for us, like Evostra or Tensorflow.
 
-### Screenshots
-
-* screenshots goes here :)
+![Walking Process](resources/walking_process.gif)
 
 ### Usage
 
@@ -31,12 +29,21 @@ The program display log for each episode.
 
 **Advanced options:**
 
-| Flags         | Description                                                                                   |
-| :------------ |:--------------------------------------------------------------------------------------------- |
-| `–-walk (-v)` | Display only walking process.                                                                 |
-| `–-help (-h)` | Display available commands.                                                                   |
-| `–-load (-l)` | Load weights for Marvin agent from a file. Skip training process if this option is specified. |
-| `–-save (-s)` | Save weights to a file after running the program.                                             |
+| Flags               | Description                                                                                   |
+| :------------------ |:--------------------------------------------------------------------------------------------- |
+| `–-walk (-w)`       | Display only walking process.                                                                 |
+| `–-video (-v)`      | Saves videos of the walking process.                                                          |
+| `–-name (-n)`       | Display the name of the game (environment).                                                   |
+| `--generation (-g)` | Change the maximum number of generations.                                                     |
+| `--population (-p)` | Count of the population between each generation.                                              |
+| `--rate (-r)`       | Mutation rate (recommended values in the range of decimals).                                  |
+| `--movement (-m)`   | umber of steps (movement) between each episode.                                               |
+| `–-load (-l)`       | Load weights for Marvin agent from a file. Skip training process if this option is specified. |
+| `–-save (-s)`       | Save weights to a file after running the program.                                             |
+| `–-quiet (-q)`      | Hide the program's log between each episode.                                                  |
+| `–-help (-h)`       | Display available commands and exit.                                                          |
+| `–-log`             | Save a log of each generation to a file. Expects a path.                                      |
+| `–-version`         | Show program's version number and exit.                                                       |
 
 *If the program launches without arguments, display training process and walking
 process.*
@@ -58,10 +65,6 @@ The following sources helped us during the development of this project:
 * [Neuroevolution - Wikipedia Article](https://en.wikipedia.org/wiki/Neuroevolution)
 * [Artificial Neural Network - Wikipedia Article](https://en.wikipedia.org/wiki/Artificial_neural_network)
 * [Evolving Neural Networks through Augmenting Topologies](http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf) (Kenneth O. Stanley and Risto Miikkulainen)
-
-## TODO
-
-* lol everything
 
 ## Contributors
 
