@@ -54,6 +54,12 @@ Use `sh setup.sh` to setup and build all the dependencies.
 
 *All the dependencies will be installed to the user by running the script...*
 
+### TODO
+
+* Make use of the average fitness of a generation, so it doesn't deviate from the parent.
+* Check if by changing code from the source file can interfere with loading the file (of a different version
+of the program). If it does, create some kind of flag to validate the version.
+
 ### Resources
 
 The following sources helped us during the development of this project:
