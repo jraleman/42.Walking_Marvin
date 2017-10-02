@@ -1,4 +1,4 @@
-# 42 US - Silicon Valley
+# 42 US - Silicon Valley.
 
 ## Walking Marvin
 
