@@ -79,4 +79,4 @@ The following sources helped us during the development of this project:
 
 ## License
 
-This project is under the MIT License;
+This project is under the MIT License.
