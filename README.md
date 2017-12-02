@@ -65,7 +65,7 @@ of the program). If it does, create some kind of flag to validate the version.
 The following sources helped us during the development of this project:
 
 * [OpenAI Gym documentation](https://gym.openai.com/docs)
-* [NEAT Super Mario World](https://www.youtube.com/watch?v=qv6UVOQ0F44) (to understand what we have to do):
+* [NEAT Super Mario World](https://www.youtube.com/watch?v=qv6UVOQ0F44) (to understand what we had to do)
 * [OpenAI-NEAT Project example](https://github.com/HackerHouseYT/OpenAI-NEAT)
 * [OpenAI Gym bipedal walker](https://gym.openai.com/evaluations/eval_ujFWHmoqSniDh8cErKCVpA)
 * [Neuroevolution - Wikipedia Article](https://en.wikipedia.org/wiki/Neuroevolution)
