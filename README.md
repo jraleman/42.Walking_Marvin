@@ -71,6 +71,7 @@ The following sources helped us during the development of this project:
 * [Neuroevolution - Wikipedia Article](https://en.wikipedia.org/wiki/Neuroevolution)
 * [Artificial Neural Network - Wikipedia Article](https://en.wikipedia.org/wiki/Artificial_neural_network)
 * [Evolving Neural Networks through Augmenting Topologies](http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf) (Kenneth O. Stanley and Risto Miikkulainen)
+* [Evolution Simulator - carykh](https://www.youtube.com/watch?v=GOFws_hhZs8)
 
 ## Contributors
 
